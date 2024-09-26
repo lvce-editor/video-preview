@@ -8,7 +8,7 @@ export const launchvideoPreviewWorker = async () => {
   // @ts-ignore
   const rpc = await vscode.createRpc({
     url: VideoPreviewWorkerUrl.videoPreviewWorkerUrl,
-    name: 'Media Preview Worker',
+    name: 'Video Preview Worker',
     execute,
   })
   return rpc
