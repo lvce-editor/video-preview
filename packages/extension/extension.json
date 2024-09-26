@@ -9,7 +9,7 @@
     {
       "id": "builtin.video-preview",
       "rpc": true,
-      "selector": [".png", ".jpg", ".jpeg", ".avif", ".svg", ".gif", ".ico"],
+      "selector": [".mp4"],
       "elements": [
         {
           "type": "title",
