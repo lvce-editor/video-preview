@@ -10,6 +10,7 @@ const initialize = (remoteUrl) => {
   const video = document.createElement('video')
   video.className = 'VideoElement'
   video.src = remoteUrl
+  video.controls = true
 
   videoContent.append(video)
   app.append(videoContent)
