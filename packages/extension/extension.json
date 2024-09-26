@@ -9,7 +9,7 @@
     {
       "id": "builtin.video-preview",
       "rpc": true,
-      "selector": [".mp4"],
+      "selector": [".mp4", ".webm", ".ogv"],
       "path": "media/index.html",
       "elements": [
         {
