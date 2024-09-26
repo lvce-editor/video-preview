@@ -1,7 +1,7 @@
 {
   "id": "builtin.video-preview",
-  "name": "Media Preview",
-  "description": "Media Preview",
+  "name": "Video Preview",
+  "description": "Video Preview",
   "browser": "src/videoPreviewMain.ts",
   "activation": ["onWebView:builtin.video-preview"],
   "languages": [],
@@ -9,7 +9,6 @@
     {
       "id": "builtin.video-preview",
       "rpc": true,
-      "path": "media/index.html",
       "selector": [".png", ".jpg", ".jpeg", ".avif", ".svg", ".gif", ".ico"]
     }
   ]
