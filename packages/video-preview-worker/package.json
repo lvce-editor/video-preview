@@ -2,7 +2,7 @@
   "name": "video-preview-worker",
   "version": "0.0.0-dev",
   "description": "",
-  "main": "src/mediaPreviewWorkerMain.ts",
+  "main": "src/videoPreviewWorkerMain.ts",
   "type": "module",
   "scripts": {
     "test": "node --unhandled-rejections=warn --experimental-vm-modules ../../node_modules/jest/bin/jest.js --detectOpenHandles --forceExit",

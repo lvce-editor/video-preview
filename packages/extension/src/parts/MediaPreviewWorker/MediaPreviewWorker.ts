@@ -1,6 +1,6 @@
 import * as GetOrCreateWorker from '../GetOrCreateWorker/GetOrCreateWorker.ts'
-import * as LaunchMediaPreviewWorker from '../LaunchMediaPreviewWorker/LaunchMediaPreviewWorker.ts'
+import * as LaunchvideoPreviewWorker from '../LaunchvideoPreviewWorker/LaunchvideoPreviewWorker.ts'
 
-const { invoke } = GetOrCreateWorker.getOrCreateWorker(LaunchMediaPreviewWorker.launchMediaPreviewWorker)
+const { invoke } = GetOrCreateWorker.getOrCreateWorker(LaunchvideoPreviewWorker.launchvideoPreviewWorker)
 
 export { invoke }

@@ -5,9 +5,9 @@ import * as HandlePointerMove from '../HandlePointerMove/HandlePointerMove.ts'
 import * as HandlePointerUp from '../HandlePointerUp/HandlePointerUp.ts'
 
 export const commandMap = {
-  'MediaPreview.getUrl': GetUrl.getUrl,
-  'MediaPreview.handlePointerDown': HandlePointerDown.handlePointerDown,
-  'MediaPreview.handlePointerUp': HandlePointerUp.handlePointerUp,
-  'MediaPreview.handlePointerMove': HandlePointerMove.handlePointerMove,
-  'MediaPreview.create': Create.create,
+  'videoPreview.getUrl': GetUrl.getUrl,
+  'videoPreview.handlePointerDown': HandlePointerDown.handlePointerDown,
+  'videoPreview.handlePointerUp': HandlePointerUp.handlePointerUp,
+  'videoPreview.handlePointerMove': HandlePointerMove.handlePointerMove,
+  'videoPreview.create': Create.create,
 }

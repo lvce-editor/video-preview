@@ -4,7 +4,7 @@ import path, { join } from 'node:path'
 import { root } from './root.js'
 
 const extension = path.join(root, 'packages', 'extension')
-const mediaPreviewWorker = path.join(root, 'packages', 'video-preview-worker')
+const videoPreviewWorker = path.join(root, 'packages', 'video-preview-worker')
 
 fs.rmSync(join(root, 'dist'), { recursive: true, force: true })
 
@@ -27,15 +27,15 @@ fs.cpSync(join(extension, 'media'), join(root, 'dist', 'media'), {
   recursive: true,
 })
 
-fs.cpSync(join(mediaPreviewWorker, 'src'), join(root, 'dist', 'video-preview-worker', 'src'), {
+fs.cpSync(join(videoPreviewWorker, 'src'), join(root, 'dist', 'video-preview-worker', 'src'), {
   recursive: true,
 })
 
-const workerUrlFilePath = path.join(root, 'dist', 'src', 'parts', 'MediaPreviewWorkerUrl', 'MediaPreviewWorkerUrl.ts')
+const workerUrlFilePath = path.join(root, 'dist', 'src', 'parts', 'videoPreviewWorkerUrl', 'videoPreviewWorkerUrl.ts')
 await replace({
   path: workerUrlFilePath,
-  occurrence: 'src/mediaPreviewWorkerMain.ts',
-  replacement: 'dist/mediaPreviewWorkerMain.js',
+  occurrence: 'src/videoPreviewWorkerMain.ts',
+  replacement: 'dist/videoPreviewWorkerMain.js',
 })
 
 const assetDirPath = path.join(root, 'dist', 'src', 'parts', 'AssetDir', 'AssetDir.ts')
@@ -47,16 +47,16 @@ await replace({
 
 await replace({
   path: join(root, 'dist', 'extension.json'),
-  occurrence: 'src/mediaPreviewMain.ts',
-  replacement: 'dist/mediaPreviewMain.js',
+  occurrence: 'src/videoPreviewMain.ts',
+  replacement: 'dist/videoPreviewMain.js',
 })
 
 await bundleJs(
-  join(root, 'dist', 'video-preview-worker', 'src', 'mediaPreviewWorkerMain.ts'),
-  join(root, 'dist', 'video-preview-worker', 'dist', 'mediaPreviewWorkerMain.js'),
+  join(root, 'dist', 'video-preview-worker', 'src', 'videoPreviewWorkerMain.ts'),
+  join(root, 'dist', 'video-preview-worker', 'dist', 'videoPreviewWorkerMain.js'),
 )
 
-await bundleJs(join(root, 'dist', 'src', 'mediaPreviewMain.ts'), join(root, 'dist', 'dist', 'mediaPreviewMain.js'))
+await bundleJs(join(root, 'dist', 'src', 'videoPreviewMain.ts'), join(root, 'dist', 'dist', 'videoPreviewMain.js'))
 
 await packageExtension({
   highestCompression: true,

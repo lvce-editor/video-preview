@@ -2,7 +2,7 @@
   "id": "builtin.video-preview",
   "name": "Media Preview",
   "description": "Media Preview",
-  "browser": "src/mediaPreviewMain.ts",
+  "browser": "src/videoPreviewMain.ts",
   "activation": ["onWebView:builtin.video-preview"],
   "languages": [],
   "webViews": [
