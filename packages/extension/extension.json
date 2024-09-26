@@ -9,7 +9,21 @@
     {
       "id": "builtin.video-preview",
       "rpc": true,
-      "selector": [".png", ".jpg", ".jpeg", ".avif", ".svg", ".gif", ".ico"]
+      "selector": [".png", ".jpg", ".jpeg", ".avif", ".svg", ".gif", ".ico"],
+      "elements": [
+        {
+          "type": "title",
+          "value": "Video Preview"
+        },
+        {
+          "type": "script",
+          "path": "media/index.js"
+        },
+        {
+          "type": "css",
+          "path": "media/index.css"
+        }
+      ]
     }
   ]
 }
