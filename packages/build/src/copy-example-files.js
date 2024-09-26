@@ -15,6 +15,7 @@ const toRemove = [
   'guqin.flv',
   'mediaelement.srt',
   'README.md',
+  '.git',
 ]
 
 const downloadRepo = async (tmpDir) => {
@@ -37,7 +38,7 @@ const copyRepoFiles = async (tmpDir) => {
 const removeUnusedFiles = async () => {
   const outDir = join(root, 'packages', 'sample-files', 'files')
   for (const item of toRemove) {
-    await rm(join(outDir, item))
+    await rm(join(outDir, item), { recursive: true, force: true })
   }
 }
 
