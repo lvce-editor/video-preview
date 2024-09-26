@@ -5,7 +5,6 @@ const previewId = 1
 export const webViewProvider = {
   id: 'builtin.video-preview',
   async create(webView, uri) {
-    console.log({ uri })
     // TODO if can use remote uri, use remote uri, else read file
     // @ts-ignore
     const remoteUrl = await VideoPreviewWorker.invoke('videoPreview.getUrl', uri)
