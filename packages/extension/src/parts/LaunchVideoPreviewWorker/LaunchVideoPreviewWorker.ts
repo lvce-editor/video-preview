@@ -1,4 +1,4 @@
-import * as videoPreviewWorkerUrl from '../videoPreviewWorkerUrl/videoPreviewWorkerUrl.ts'
+import * as VideoPreviewWorkerUrl from '../VideoPreviewWorkerUrl/VideoPreviewWorkerUrl.ts'
 
 const execute = (method, ...params) => {
   return {}
@@ -7,7 +7,7 @@ const execute = (method, ...params) => {
 export const launchvideoPreviewWorker = async () => {
   // @ts-ignore
   const rpc = await vscode.createRpc({
-    url: videoPreviewWorkerUrl.videoPreviewWorkerUrl,
+    url: VideoPreviewWorkerUrl.videoPreviewWorkerUrl,
     name: 'Media Preview Worker',
     execute,
   })
