@@ -1,7 +1,6 @@
 // TODO use virtual dom in  worker
 
 const handleError = async (event) => {
-  console.log('error', event)
   await rpc.invoke('handleError')
 }
 
@@ -24,8 +23,6 @@ const initialize = (remoteUrl) => {
   document.body.append(app)
 }
 
-const update = (state) => {}
-
 const setError = (message) => {
   document.body.textContent = ''
   const $Error = document.createElement('div')
@@ -36,6 +33,5 @@ const setError = (message) => {
 
 const rpc = globalThis.lvceRpc({
   initialize,
-  update,
   setError,
 })
