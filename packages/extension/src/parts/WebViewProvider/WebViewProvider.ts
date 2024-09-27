@@ -9,5 +9,12 @@ export const webViewProvider = {
     webViewProvider.webView = webView
   },
   async open(uri, webView) {},
-  commands: {},
+  commands: {
+    handleError() {
+      // TODO improve error message for file not found error
+      const errorMessage = `Error: Video Failed to load`
+      // @ts-ignore
+      webViewProvider.webView.invoke('setError', errorMessage)
+    },
+  },
 }
