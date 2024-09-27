@@ -1,7 +1,10 @@
 // TODO use virtual dom in  worker
 
 const handleError = async (event) => {
-  await rpc.invoke('handleError')
+  const { target } = event
+  const { error } = target
+  const { code, message } = error
+  await rpc.invoke('handleError', code, message)
 }
 
 const initialize = (remoteUrl) => {

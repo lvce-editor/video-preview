@@ -10,9 +10,9 @@ export const webViewProvider = {
   },
   async open(uri, webView) {},
   commands: {
-    handleError() {
+    handleError(code, message) {
       // TODO improve error message for file not found error
-      const errorMessage = `Error: Video Failed to load`
+      const errorMessage = `Error: Video Failed to load: ${message}`
       // @ts-ignore
       webViewProvider.webView.invoke('setError', errorMessage)
     },
