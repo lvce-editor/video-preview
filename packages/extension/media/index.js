@@ -33,6 +33,5 @@ const setError = (message) => {
 
 const rpc = globalThis.lvceRpc({
   initialize,
-  update,
   setError,
 })
