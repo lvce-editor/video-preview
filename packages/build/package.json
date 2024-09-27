@@ -10,7 +10,7 @@
   "license": "MIT",
   "devDependencies": {
     "@lvce-editor/package-extension": "^1.1.0",
-    "@lvce-editor/server": "^0.34.13",
+    "@lvce-editor/server": "^0.34.14",
     "execa": "^9.4.0"
   }
 }
