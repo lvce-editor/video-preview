@@ -1,9 +1,13 @@
+const id = 'builtin.video-preview'
+
 export const webViewProvider = {
-  id: 'builtin.video-preview',
+  id,
   async create(webView, uri) {
     // TODO if can use remote uri, use remote uri, else read file
     // @ts-ignore
-    const remoteUrl = await vscode.getRemoteUrl(uri)
+    const remoteUrl = await vscode.getRemoteUrl(uri, {
+      webViewId: id,
+    })
     await webView.invoke('initialize', remoteUrl)
     // @ts-ignore
     webViewProvider.webView = webView
