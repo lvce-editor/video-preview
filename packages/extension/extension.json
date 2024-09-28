@@ -9,7 +9,7 @@
     {
       "id": "builtin.video-preview",
       "rpc": true,
-      "selector": [".mp4", ".webm", ".ogv"],
+      "selector": [".mp4", ".mov", ".avi", ".wmv", ".avchd", ".webm", ".ogv", ".flv"],
       "contentSecurityPolicy": ["default-src 'none'", "script-src 'self'", "style-src 'self'", "media-src 'self' blob:"],
       "path": "media/index.html",
       "elements": [
