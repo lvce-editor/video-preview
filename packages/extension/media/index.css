@@ -1,3 +1,7 @@
+:root {
+  --AppBackground: #1e2324;
+}
+
 html,
 body {
   width: 100%;
@@ -13,6 +17,7 @@ body {
   justify-content: center;
   align-items: center;
   contain: strict;
+  background: var(--AppBackground);
 }
 
 .Error {
