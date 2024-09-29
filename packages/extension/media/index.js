@@ -7,6 +7,10 @@ const handleError = async (event) => {
   await rpc.invoke('handleError', code, message)
 }
 
+const handleLoad = async (event) => {
+  await rpc.invoke('handleLoad')
+}
+
 const initialize = (remoteUrl) => {
   const app = document.createElement('div')
   app.className = 'App'
@@ -19,6 +23,7 @@ const initialize = (remoteUrl) => {
   video.src = remoteUrl
   video.controls = true
   video.addEventListener('error', handleError)
+  video.addEventListener('loadeddata', handleLoad)
 
   videoContent.append(video)
   app.append(videoContent)
