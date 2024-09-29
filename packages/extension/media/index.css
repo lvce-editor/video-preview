@@ -27,3 +27,12 @@ body {
   font-size: 25px;
   font-family: sans-serif;
 }
+
+.VideoContent {
+  contain: content;
+}
+
+.VideoElement {
+  contain: content;
+  max-width: 100%;
+}
