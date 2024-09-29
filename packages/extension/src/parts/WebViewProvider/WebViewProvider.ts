@@ -21,5 +21,8 @@ export const webViewProvider = {
       // @ts-ignore
       webViewProvider.webView.invoke('setError', errorMessage)
     },
+    handleLoad() {
+      // console.log('video loaded')
+    },
   },
 }
