@@ -24,5 +24,8 @@ export const webViewProvider = {
     handleLoad() {
       // console.log('video loaded')
     },
+    handleTimeUpdate(currentTime) {
+      // console.log('time update', currentTime)
+    },
   },
 }
