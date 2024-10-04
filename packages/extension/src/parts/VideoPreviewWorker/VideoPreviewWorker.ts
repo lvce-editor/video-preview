@@ -10,7 +10,7 @@ const getRemoteUrl = async (uri) => {
 
 const getFn = (method) => {
   switch (method) {
-    case 'getRemoteUrl':
+    case 'Host.getRemoteUrl':
       return getRemoteUrl
     default:
       throw new Error(`method not found: ${method}`)
