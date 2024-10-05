@@ -51,6 +51,12 @@ await replace({
   replacement: 'dist/videoPreviewMain.js',
 })
 
+await replace({
+  path: join(root, 'dist', 'extension.json'),
+  occurrence: '../video-preview-worker/src/videoPreviewWorkerMain.ts',
+  replacement: './video-preview-worker/dist/videoPreviewWorkerMain.js',
+})
+
 await bundleJs(
   join(root, 'dist', 'video-preview-worker', 'src', 'videoPreviewWorkerMain.ts'),
   join(root, 'dist', 'video-preview-worker', 'dist', 'videoPreviewWorkerMain.js'),
