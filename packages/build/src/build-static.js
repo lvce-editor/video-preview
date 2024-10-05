@@ -26,6 +26,11 @@ await replace({
   occurrence: 'src/videoPreviewMain.ts',
   replacement: 'dist/videoPreviewMain.js',
 })
+await replace({
+  path: path.join(root, 'dist', commitHash, 'config', 'webExtensions.json'),
+  occurrence: '../video-preview-worker/src/videoPreviewWorkerMain.ts',
+  replacement: './video-preview-worker/dist/videoPreviewWorkerMain.js',
+})
 
 const pathPrefix = '/video-preview'
 const webViewsPath = join(root, 'dist', commitHash, 'config', 'webViews.json')
