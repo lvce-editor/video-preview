@@ -31,20 +31,6 @@ fs.cpSync(join(videoPreviewWorker, 'src'), join(root, 'dist', 'video-preview-wor
   recursive: true,
 })
 
-const workerUrlFilePath = path.join(root, 'dist', 'src', 'parts', 'VideoPreviewWorkerUrl', 'VideoPreviewWorkerUrl.ts')
-await replace({
-  path: workerUrlFilePath,
-  occurrence: 'src/videoPreviewWorkerMain.ts',
-  replacement: 'dist/videoPreviewWorkerMain.js',
-})
-
-const assetDirPath = path.join(root, 'dist', 'src', 'parts', 'AssetDir', 'AssetDir.ts')
-await replace({
-  path: assetDirPath,
-  occurrence: '../../../../',
-  replacement: '../',
-})
-
 await replace({
   path: join(root, 'dist', 'extension.json'),
   occurrence: 'src/videoPreviewMain.ts',
