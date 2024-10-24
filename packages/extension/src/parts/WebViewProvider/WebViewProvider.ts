@@ -15,6 +15,10 @@ export const webViewProvider = {
     webViewProvider.webView = webView
   },
   async open(uri, webView) {},
+  async saveState() {
+    const state = await VideoPreviewWorker.invoke('VideoPreview.saveState', id)
+    return state
+  },
   commands: {
     handleError(code, message) {
       // TODO move this to worker
