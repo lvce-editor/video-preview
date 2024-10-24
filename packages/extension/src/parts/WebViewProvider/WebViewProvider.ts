@@ -29,5 +29,11 @@ export const webViewProvider = {
     async handleTimeUpdate(currentTime) {
       await VideoPreviewWorker.invoke('VideoPreview.setTime', id, currentTime)
     },
+    pageHide() {
+      console.log('page hide (worker)')
+    },
+    async beforeUnload() {
+      console.log('before unload (worker)')
+    },
   },
 }
