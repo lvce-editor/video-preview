@@ -50,3 +50,10 @@ const rpc = globalThis.lvceRpc({
   initialize,
   setError,
 })
+
+// TODO in beforeunload, there is ~30ms time to save state in indexeddb
+// before the worker is disposed. it might even be less time in mobile browsers.
+window.addEventListener('beforeunload', async (event) => {
+  console.log('before unload')
+  await rpc.invoke('beforeUnload')
+})
