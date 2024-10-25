@@ -5,18 +5,22 @@ const id = 1
 
 export const webViewProvider = {
   id: WebViewId.webViewId,
-  async create(webView, uri) {
+  async create(webView, uri, savedState) {
+    console.log({ savedState })
     // TODO if can use remote uri, use remote uri, else read file
     await VideoPreviewWorker.invoke('VideoPreview.create', id)
+    await VideoPreviewWorker.invoke('VideoPreview.setSavedState', id, savedState)
     // @ts-ignore
     const remoteUrl = await VideoPreviewWorker.invoke('VideoPreview.getUrl', uri)
-    await webView.invoke('initialize', remoteUrl)
+    const time = await VideoPreviewWorker.invoke('VideoPreview.getTime', id)
+    await webView.invoke('initialize', remoteUrl, time)
     // @ts-ignore
     webViewProvider.webView = webView
   },
   async open(uri, webView) {},
   async saveState() {
     const state = await VideoPreviewWorker.invoke('VideoPreview.saveState', id)
+    console.log({ saved: state })
     return state
   },
   commands: {

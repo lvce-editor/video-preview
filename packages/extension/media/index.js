@@ -17,7 +17,7 @@ const handleTimeUpdated = async (event) => {
   await rpc.invoke('handleTimeUpdate', currentTime)
 }
 
-const initialize = (remoteUrl) => {
+const initialize = (remoteUrl, time) => {
   const app = document.createElement('div')
   app.className = 'App'
 
@@ -28,6 +28,9 @@ const initialize = (remoteUrl) => {
   video.className = 'VideoElement'
   video.src = remoteUrl
   video.controls = true
+  if (time) {
+    video.currentTime = time
+  }
   video.addEventListener('error', handleError)
   video.addEventListener('loadeddata', handleLoad)
   video.addEventListener('timeupdate', handleTimeUpdated)
