@@ -6,7 +6,6 @@ const id = 1
 export const webViewProvider = {
   id: WebViewId.webViewId,
   async create(webView, uri, savedState) {
-    console.log({ savedState })
     // TODO if can use remote uri, use remote uri, else read file
     await VideoPreviewWorker.invoke('VideoPreview.create', id)
     await VideoPreviewWorker.invoke('VideoPreview.setSavedState', id, savedState)
@@ -20,7 +19,6 @@ export const webViewProvider = {
   async open(uri, webView) {},
   async saveState() {
     const state = await VideoPreviewWorker.invoke('VideoPreview.saveState', id)
-    console.log({ saved: state })
     return state
   },
   commands: {
