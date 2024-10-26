@@ -10,7 +10,10 @@ export const webViewProvider = {
     await VideoPreviewWorker.invoke('VideoPreview.create', id)
     await VideoPreviewWorker.invoke('VideoPreview.setSavedState', id, savedState)
     // @ts-ignore
-    const remoteUrl = await vscode.getRemoteUrl(uri)
+    // @ts-ignore
+    const remoteUrl = await vscode.getRemoteUrl(uri, {
+      webViewId: WebViewId.webViewId,
+    })
     const time = await VideoPreviewWorker.invoke('VideoPreview.getTime', id)
     await webView.invoke('initialize', remoteUrl, time)
     // @ts-ignore
