@@ -20,6 +20,7 @@
       "rpc": true,
       "selector": [".mp4", ".mov", ".avi", ".wmv", ".avchd", ".webm", ".ogv", ".flv"],
       "contentSecurityPolicy": ["default-src 'none'", "script-src 'self'", "style-src 'self'", "media-src 'self' blob:"],
+      "allow": ["fullscreen"],
       "path": "media/index.html",
       "elements": [
         {
