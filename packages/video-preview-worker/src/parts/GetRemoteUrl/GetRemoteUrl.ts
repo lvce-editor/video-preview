@@ -1,6 +1,7 @@
-const rpc = globalThis.rpc
+import * as Rpc from '../Rpc/Rpc.ts'
+
 
 export const getRemoteUrl = async (uri: string) => {
-  const url = await rpc.invoke('Host.getRemoteUrl', uri)
+  const url = await Rpc.invoke('Host.getRemoteUrl', uri)
   return url
 }
