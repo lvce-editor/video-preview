@@ -15,7 +15,9 @@ export const webViewProvider = {
       webViewId: WebViewId.webViewId,
     })
     const time = await VideoPreviewWorker.invoke('VideoPreview.getTime', id)
-    await webView.invoke('initialize', remoteUrl, time)
+    const event = await webView.invoke('initialize', remoteUrl, time)
+    console.log({ event, webView })
+
     // @ts-ignore
     webViewProvider.webView = webView
   },
