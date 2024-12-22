@@ -16,7 +16,9 @@ export const webViewProvider = {
     })
     const time = await VideoPreviewWorker.invoke('VideoPreview.getTime', id)
     const event = await webView.invoke('initialize', remoteUrl, time)
-    console.log({ event, webView })
+    if (event.type === 'error') {
+      throw new Error(`Failed to load video: ${event.message}`)
+    }
 
     // @ts-ignore
     webViewProvider.webView = webView
