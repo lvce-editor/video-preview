@@ -1,3 +1,4 @@
+import { VideoLoadError } from '../VideoLoadError/VideoLoadError.ts'
 import * as VideoPreviewWorker from '../VideoPreviewWorker/VideoPreviewWorker.ts'
 import * as WebViewId from '../WebViewId/WebViewId.ts'
 
@@ -17,7 +18,7 @@ export const webViewProvider = {
     const time = await VideoPreviewWorker.invoke('VideoPreview.getTime', id)
     const event = await webView.invoke('initialize', remoteUrl, time)
     if (event.type === 'error') {
-      throw new Error(`Failed to load video: ${event.message}`)
+      throw new VideoLoadError(event)
     }
 
     // @ts-ignore
