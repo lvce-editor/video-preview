@@ -1,7 +1,11 @@
+import { VideoLoadError } from '../VideoLoadError/VideoLoadError.ts'
 import * as VideoPreviewWorker from '../VideoPreviewWorker/VideoPreviewWorker.ts'
 import * as WebViewId from '../WebViewId/WebViewId.ts'
 
 const id = 1
+
+// TODO move all of this to video worker.
+// then the video worker only asks for remoteUrl, which is provided by vscode.getRemoteUrl
 
 export const webViewProvider = {
   id: WebViewId.webViewId,
@@ -15,7 +19,11 @@ export const webViewProvider = {
       webViewId: WebViewId.webViewId,
     })
     const time = await VideoPreviewWorker.invoke('VideoPreview.getTime', id)
-    await webView.invoke('initialize', remoteUrl, time)
+    const event = await webView.invoke('initialize', remoteUrl, time)
+    if (event.type === 'error') {
+      throw new VideoLoadError(event)
+    }
+
     // @ts-ignore
     webViewProvider.webView = webView
   },
