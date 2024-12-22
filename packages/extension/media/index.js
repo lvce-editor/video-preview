@@ -75,7 +75,6 @@ const initialize = async (remoteUrl, time) => {
 
   const event = await waitForVideoReady(video)
   const serializedEvent = serializeEvent(event)
-  console.log({ serializedEvent })
   return serializedEvent
 }
 
