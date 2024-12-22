@@ -12,5 +12,7 @@ export const test = async ({ FileSystem, Main, Locator, expect }) => {
   // TODO verify an error message is displayed
   const error = Locator('.Viewlet.Error')
   await expect(error).toBeVisible()
-  await expect(error).toHaveText('Error: Failed to load video: DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed')
+  await expect(error).toHaveText(
+    'Error: Failed to decode video: DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed',
+  )
 }
