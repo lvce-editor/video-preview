@@ -1,16 +1,5 @@
 // TODO use virtual dom in  worker
 
-const handleError = async (event) => {
-  const { target } = event
-  const { error } = target
-  const { code, message } = error
-  await rpc.invoke('handleError', code, message)
-}
-
-const handleLoad = async (event) => {
-  await rpc.invoke('handleLoad')
-}
-
 const handleTimeUpdated = async (event) => {
   const { target } = event
   const { currentTime } = target
@@ -77,8 +66,6 @@ const initialize = async (remoteUrl, time) => {
   if (time) {
     video.currentTime = time
   }
-  video.addEventListener('error', handleError)
-  video.addEventListener('loadeddata', handleLoad)
   video.addEventListener('timeupdate', handleTimeUpdated)
 
   videoContent.append(video)
