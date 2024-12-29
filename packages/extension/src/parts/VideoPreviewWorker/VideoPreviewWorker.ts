@@ -4,6 +4,7 @@ import * as Command from '../Command/Command.ts'
 const rpc = vscode.createRpc({
   id: 'builtin.video-preview.video-preview-worker',
   execute: Command.execute,
+  commandMap: Command.commandMap,
 })
 
 export const invoke = (method, ...params) => {
