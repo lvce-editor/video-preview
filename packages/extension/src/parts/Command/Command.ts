@@ -8,12 +8,14 @@ const getRemoteUrl = async (uri) => {
   return remoteUrl
 }
 
+export const commandMap = {
+  'Host.getRemoteUrl': getRemoteUrl,
+}
+
 const getFn = (method) => {
-  switch (method) {
-    case 'Host.getRemoteUrl':
-      return getRemoteUrl
-    default:
-      throw new Error(`method not found: ${method}`)
+  const fn = commandMap[method]
+  if (!fn) {
+    throw new Error(`method not found: ${method}`)
   }
 }
 
