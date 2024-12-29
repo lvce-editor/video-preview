@@ -11,16 +11,3 @@ const getRemoteUrl = async (uri) => {
 export const commandMap = {
   'Host.getRemoteUrl': getRemoteUrl,
 }
-
-const getFn = (method) => {
-  const fn = commandMap[method]
-  if (!fn) {
-    throw new Error(`method not found: ${method}`)
-  }
-}
-
-export const execute = (method, ...params) => {
-  const fn = getFn(method)
-  // @ts-ignore
-  return fn(...params)
-}
