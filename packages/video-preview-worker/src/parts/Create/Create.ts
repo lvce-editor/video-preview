@@ -27,13 +27,8 @@ export const create = async ({ port, savedState, webViewId, uri }) => {
     webViewId,
   })
 
-  console.log({ remoteUrl })
   const time = GetTime.getTime(id)
-  console.log({ time })
-  console.log('before init')
   const event = await port.invoke('initialize', remoteUrl, time)
-  console.log('after init')
-  console.log({ event })
   if (event.type === 'error') {
     throw new VideoLoadError(event)
   }
