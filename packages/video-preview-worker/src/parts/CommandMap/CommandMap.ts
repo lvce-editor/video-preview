@@ -1,9 +1,8 @@
 import * as Create from '../Create/Create.ts'
-import * as GetUrl from '../GetUrl/GetUrl.ts'
-import * as SaveState from '../SaveState/SaveState.ts'
-import * as SetSavedState from '../SetSavedState/SetSavedState.ts'
 import * as GetTime from '../GetTime/GetTime.ts'
 import * as Rpc from '../Rpc/Rpc.ts'
+import * as SetSavedState from '../SetSavedState/SetSavedState.ts'
+import { VideoLoadError } from '../VideoLoadError/VideoLoadError.ts'
 
 // export const commandMap = {
 // 'VideoPreview.create': Create.create,
@@ -29,10 +28,13 @@ const create = async ({ port, savedState, webViewId, uri }) => {
 
   console.log({ remoteUrl })
   const time = GetTime.getTime(id)
+  console.log({ time })
+  console.log('before init')
   const event = await port.invoke('initialize', remoteUrl, time)
+  console.log('after init')
+  console.log({ event })
   if (event.type === 'error') {
-    // TODO
-    // throw new VideoLoadError(event)
+    throw new VideoLoadError(event)
   }
 
   return {}
