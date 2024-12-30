@@ -1,10 +1,42 @@
+import * as GetTime from '../GetTime/GetTime.ts'
+import { id } from '../Id/Id.ts'
+import * as Rpc from '../Rpc/Rpc.ts'
+import * as SetSavedState from '../SetSavedState/SetSavedState.ts'
+import { VideoLoadError } from '../VideoLoadError/VideoLoadError.ts'
 import { WebView } from '../WebView/WebView.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
-export const create = (id: number): void => {
+// export const commandMap = {
+// 'VideoPreview.create': Create.create,
+// 'VideoPreview.getTime': GetTime.getTime,
+// 'VideoPreview.getUrl': GetUrl.getUrl,
+// 'VideoPreview.saveState': SaveState.saveState,
+// 'VideoPreview.setSavedState': SetSavedState.setSavedState,
+// 'VideoPreview.setTime': SetTime.setTime,
+// }
+
+export const create = async ({ port, savedState, webViewId, uri }) => {
   const webView: WebView = {
     url: '',
     time: 0,
   }
   WebViewStates.set(id, webView)
+  SetSavedState.setSavedState(id, savedState)
+  const remoteUrl = await Rpc.invoke('WebView.getRemoteUrl', {
+    uri,
+    webViewId,
+  })
+
+  console.log({ remoteUrl })
+  const time = GetTime.getTime(id)
+  console.log({ time })
+  console.log('before init')
+  const event = await port.invoke('initialize', remoteUrl, time)
+  console.log('after init')
+  console.log({ event })
+  if (event.type === 'error') {
+    throw new VideoLoadError(event)
+  }
+
+  return {}
 }
