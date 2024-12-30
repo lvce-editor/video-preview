@@ -30,6 +30,9 @@ const create = async ({ id, savedState, webViewId, uri }) => {
   console.log({ remoteUrl })
   const time = GetTime.getTime(id)
   const port = ports[id]
+  if (!port) {
+    throw new Error(`port not found ${id}`)
+  }
   const event = await port.invoke('initialize', remoteUrl, time)
   if (event.type === 'error') {
     // TODO
