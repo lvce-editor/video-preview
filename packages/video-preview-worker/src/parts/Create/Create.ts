@@ -6,15 +6,6 @@ import { VideoLoadError } from '../VideoLoadError/VideoLoadError.ts'
 import { WebView } from '../WebView/WebView.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
-// export const commandMap = {
-// 'VideoPreview.create': Create.create,
-// 'VideoPreview.getTime': GetTime.getTime,
-// 'VideoPreview.getUrl': GetUrl.getUrl,
-// 'VideoPreview.saveState': SaveState.saveState,
-// 'VideoPreview.setSavedState': SetSavedState.setSavedState,
-// 'VideoPreview.setTime': SetTime.setTime,
-// }
-
 export const create = async ({ port, savedState, webViewId, uri }) => {
   const webView: WebView = {
     url: '',
