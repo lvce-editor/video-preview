@@ -11,7 +11,7 @@ const WebViewStates = await import('../src/parts/WebViewStates/WebViewStates.ts'
 test('setTime - should update webview time', () => {
   const id = 1
   const newTime = 50
-  setTime(id, newTime)
+  setTime(newTime)
   expect(WebViewStates.get).toHaveBeenCalledWith(id)
   expect(WebViewStates.set).toHaveBeenCalledWith(id, {
     url: '',

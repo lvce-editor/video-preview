@@ -17,7 +17,7 @@
   "webViews": [
     {
       "id": "builtin.video-preview",
-      "rpc": true,
+      "rpc": "builtin.video-preview.video-preview-worker",
       "selector": [".mp4", ".mov", ".avi", ".wmv", ".avchd", ".webm", ".ogv", ".flv"],
       "contentSecurityPolicy": ["default-src 'none'", "script-src 'self'", "style-src 'self'", "media-src 'self' blob:"],
       "allow": ["fullscreen"],
