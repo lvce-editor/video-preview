@@ -46,9 +46,10 @@ await replace({
 await bundleJs(
   join(root, 'dist', 'video-preview-worker', 'src', 'videoPreviewWorkerMain.ts'),
   join(root, 'dist', 'video-preview-worker', 'dist', 'videoPreviewWorkerMain.js'),
+  false,
 )
 
-await bundleJs(join(root, 'dist', 'src', 'videoPreviewMain.ts'), join(root, 'dist', 'dist', 'videoPreviewMain.js'))
+await bundleJs(join(root, 'dist', 'src', 'videoPreviewMain.ts'), join(root, 'dist', 'dist', 'videoPreviewMain.js'), false)
 
 await packageExtension({
   highestCompression: true,
