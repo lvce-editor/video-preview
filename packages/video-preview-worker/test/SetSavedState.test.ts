@@ -1,8 +1,8 @@
 import { jest, test, expect } from '@jest/globals'
 
 jest.unstable_mockModule('../src/parts/WebViewStates/WebViewStates.ts', () => ({
+  get: jest.fn().mockReturnValue({ time: 0, url: '' }),
   set: jest.fn(),
-  get: jest.fn().mockReturnValue({ url: '', time: 0 }),
 }))
 
 const { setSavedState } = await import('../src/parts/SetSavedState/SetSavedState.ts')
@@ -14,8 +14,8 @@ test('setSavedState - should set valid saved time', () => {
   setSavedState(id, savedState)
   expect(WebViewStates.get).toHaveBeenCalledWith(id)
   expect(WebViewStates.set).toHaveBeenCalledWith(id, {
-    url: '',
     time: 100,
+    url: '',
   })
 })
 
@@ -23,7 +23,7 @@ test('setSavedState - should handle invalid time', () => {
   const id = 1
   setSavedState(id, { time: 'invalid' })
   expect(WebViewStates.set).toHaveBeenCalledWith(id, {
-    url: '',
     time: 0,
+    url: '',
   })
 })

@@ -1,8 +1,8 @@
 import { jest, test, expect } from '@jest/globals'
 
 jest.unstable_mockModule('../src/parts/WebViewStates/WebViewStates.ts', () => ({
+  get: jest.fn().mockReturnValue({ time: 0, url: '' }),
   set: jest.fn(),
-  get: jest.fn().mockReturnValue({ url: '', time: 0 }),
 }))
 
 jest.unstable_mockModule('../src/parts/Rpc/Rpc.ts', () => ({
@@ -29,16 +29,16 @@ test('create - should create webview and handle successful initialization', asyn
   const uri = 'video.mp4'
   const id = 1
 
-  await create({ port, savedState, webViewId, uri, id })
+  await create({ id, port, savedState, uri, webViewId })
 
   expect(WebViewStates.set).toHaveBeenCalledWith(id, {
-    url: '',
     time: 0,
+    url: '',
   })
   expect(SetSavedState.setSavedState).toHaveBeenCalledWith(id, savedState)
   expect(Rpc.invoke).toHaveBeenCalledWith('WebView.getRemoteUrl', {
-    uri,
     id,
+    uri,
     webViewId,
   })
   expect(port.invoke).toHaveBeenCalledWith('initialize', 'https://example.com/video.mp4', 0)
@@ -46,9 +46,9 @@ test('create - should create webview and handle successful initialization', asyn
 
 test('create - should throw VideoLoadError when initialization fails', async () => {
   const errorEvent = {
-    type: 'error',
     code: 4,
     message: 'Failed to load video',
+    type: 'error',
   }
   const port = {
     // @ts-ignore
@@ -59,5 +59,5 @@ test('create - should throw VideoLoadError when initialization fails', async () 
   const uri = 'video.mp4'
   const id = 1
 
-  await expect(create({ port, savedState, webViewId, uri, id })).rejects.toThrow('Failed to decode video: Failed to load video')
+  await expect(create({ id, port, savedState, uri, webViewId })).rejects.toThrow('Failed to decode video: Failed to load video')
 })

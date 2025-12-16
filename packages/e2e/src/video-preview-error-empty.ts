@@ -1,6 +1,6 @@
 export const name = 'video-preview-error-empty'
 
-export const test = async ({ FileSystem, Main, Locator, expect }) => {
+export const test = async ({ expect, FileSystem, Locator, Main }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/test.mp4`, ``)
