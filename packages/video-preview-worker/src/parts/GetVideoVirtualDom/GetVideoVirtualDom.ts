@@ -3,24 +3,24 @@ import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts
 export const getVideoVirtualDom = (src: string, time: number) => {
   return [
     {
-      type: VirtualDomElements.Div,
+      childCount: 1,
       className: 'App',
-      childCount: 1,
-    },
-    {
       type: VirtualDomElements.Div,
-      className: 'VideoContent',
-      childCount: 1,
     },
     {
-      type: VirtualDomElements.Video,
+      childCount: 1,
+      className: 'VideoContent',
+      type: VirtualDomElements.Div,
+    },
+    {
       className: 'VideoElement',
-      src,
       controls: true,
       currentTime: time,
-      onTimeUpdate: 'handleTimeUpdate',
       onError: 'handleError',
       onLoadedData: 'handleLoadedData',
+      onTimeUpdate: 'handleTimeUpdate',
+      src,
+      type: VirtualDomElements.Video,
     },
   ]
 }

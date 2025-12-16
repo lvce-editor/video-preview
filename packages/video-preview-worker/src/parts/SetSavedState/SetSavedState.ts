@@ -1,5 +1,5 @@
+import type { WebView } from '../WebView/WebView.ts'
 import * as GetSavedTime from '../GetSavedTime/GetSavedTime.ts'
-import { WebView } from '../WebView/WebView.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
 

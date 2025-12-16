@@ -1,5 +1,5 @@
+import type { WebView } from '../WebView/WebView.ts'
 import { id } from '../Id/Id.ts'
-import { WebView } from '../WebView/WebView.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
 export const setTime = (time: number): void => {

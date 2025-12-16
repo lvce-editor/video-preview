@@ -1,20 +1,20 @@
+import type { WebView } from '../WebView/WebView.ts'
 import * as GetTime from '../GetTime/GetTime.ts'
 import * as Rpc from '../Rpc/Rpc.ts'
 import * as SetSavedState from '../SetSavedState/SetSavedState.ts'
 import { VideoLoadError } from '../VideoLoadError/VideoLoadError.ts'
-import { WebView } from '../WebView/WebView.ts'
 import * as WebViewStates from '../WebViewStates/WebViewStates.ts'
 
-export const create = async ({ port, savedState, webViewId, uri, id }) => {
+export const create = async ({ id, port, savedState, uri, webViewId }) => {
   const webView: WebView = {
-    url: '',
     time: 0,
+    url: '',
   }
   WebViewStates.set(id, webView)
   SetSavedState.setSavedState(id, savedState)
   const remoteUrl = await Rpc.invoke('WebView.getRemoteUrl', {
-    uri,
     id,
+    uri,
     webViewId,
   })
 
