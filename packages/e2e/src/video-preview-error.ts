@@ -13,7 +13,7 @@ export const test = async ({ FileSystem, Main, Locator, expect }) => {
   await expect(error).toBeVisible()
   // TODO make it less browser specific
   await expect(error).toHaveText(
-    'Error: Failed to decode video: DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed',
+    'Error: Failed to decode video: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed',
   )
 
   // TODO
