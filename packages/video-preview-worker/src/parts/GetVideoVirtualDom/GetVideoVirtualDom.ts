@@ -1,3 +1,4 @@
+import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
 
 export const getVideoVirtualDom = (src: string, time: number) => {
@@ -16,9 +17,9 @@ export const getVideoVirtualDom = (src: string, time: number) => {
       className: 'VideoElement',
       controls: true,
       currentTime: time,
-      onError: 'handleError',
-      onLoadedData: 'handleLoadedData',
-      onTimeUpdate: 'handleTimeUpdate',
+      onError: DomEventListenerFunctions.HandleError,
+      onLoadedData: DomEventListenerFunctions.HandleLoadedData,
+      onTimeUpdate: DomEventListenerFunctions.HandleTimeUpdate,
       src,
       type: VirtualDomElements.Video,
     },
