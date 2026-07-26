@@ -4,6 +4,7 @@
   "description": "Video Preview",
   "repository": "https://github.com/lvce-editor/video-preview",
   "browser": "dist/videoPreviewMain.js",
+  "contentSecurityPolicy": ["default-src 'none'", "script-src 'self'"],
   "isolated": true,
   "workerName": "Video Preview Extension Worker",
   "activation": ["onView:builtin.video-preview"],

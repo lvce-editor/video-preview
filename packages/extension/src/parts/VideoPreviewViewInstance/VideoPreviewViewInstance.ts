@@ -13,7 +13,7 @@ interface SavedState {
 }
 
 export interface VideoPreviewViewInstance extends VirtualDomViewInstance {
-  readonly handleError: (code: unknown, message: unknown) => void
+  readonly handleVideoError: (code: unknown, message: unknown) => void
   readonly render: () => readonly VirtualDomNode[]
   readonly saveState: () => unknown
 }
@@ -41,7 +41,7 @@ export const createInstance = (context?: ViewContext): VideoPreviewViewInstance 
   }
 
   return {
-    handleError(code: unknown, message: unknown): void {
+    handleVideoError(code: unknown, message: unknown): void {
       state = {
         ...state,
         errorMessage: getVideoErrorMessage(code, message),
