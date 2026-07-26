@@ -1,9 +1,14 @@
 export const name = 'video-preview'
 
-export const skip = true
+const remotePrefix = '/remote'
+const videoUri = new URL('../../sample-files/files/big_buck_bunny.mp4', import.meta.url).pathname.slice(remotePrefix.length)
 
-export const test = async ({ Editor, expect, FileSystem, Locator, Main }) => {
-  // TODO verify media preview opens
-  // TODO add tests for different files types
-  // TODO add tests for errors
+export const test = async ({ expect, Locator, Main }) => {
+  // act
+  await Main.openUri(videoUri)
+
+  // assert
+  const video = Locator('.VideoElement')
+  await expect(video).toBeVisible()
+  await expect(video).toHaveAttribute('src', `${remotePrefix}${videoUri}`)
 }

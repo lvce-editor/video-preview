@@ -9,13 +9,7 @@ export const test = async ({ expect, FileSystem, Locator, Main }) => {
   await Main.openUri(`${tmpDir}/test.mp4`)
 
   // assert
-  const error = Locator('.Viewlet.Error')
+  const error = Locator('.Viewlet .VideoPreviewError')
   await expect(error).toBeVisible()
-  // TODO make it less browser specific
-  await expect(error).toHaveText(
-    'Error: Failed to decode video: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed',
-  )
-
-  // TODO
-  // await expect(error).toContainText('Error: Failed to decode video')
+  await expect(error).toContainText('Failed to decode video')
 }

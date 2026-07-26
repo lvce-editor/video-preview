@@ -9,8 +9,7 @@ export const test = async ({ expect, FileSystem, Locator, Main }) => {
   await Main.openUri(`${tmpDir}/test.mp4`)
 
   // assert
-  const error = Locator('.Viewlet.Error')
+  const error = Locator('.Viewlet .VideoPreviewError')
   await expect(error).toBeVisible()
-  // TODO make it less browser specific
-  await expect(error).toHaveText('Error: Failed to decode video: MEDIA_ELEMENT_ERROR: Format error')
+  await expect(error).toContainText('Failed to decode video')
 }

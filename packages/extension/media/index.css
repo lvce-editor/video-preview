@@ -1,32 +1,23 @@
-:root {
-  --AppBackground: #1e2324;
-}
-
-html,
-body {
-  width: 100%;
-  height: 100%;
-  contain: strict;
-  margin: 0;
-  background: var(--AppBackground);
-}
-
-.App {
+.VideoPreview {
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   contain: strict;
-  background: var(--AppBackground);
+  overflow: hidden;
+  background: var(--MainBackground, #1e2324);
   padding: 20px;
   box-sizing: border-box;
 }
 
-.Error {
-  background: red;
-  color: white;
-  padding: 30px;
+.VideoPreviewError {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  color: var(--ErrorForeground, #f48771);
   font-size: 25px;
   font-family: sans-serif;
 }
