@@ -2,39 +2,21 @@
   "id": "builtin.video-preview",
   "name": "Video Preview",
   "description": "Video Preview",
-  "browser": "src/videoPreviewMain.ts",
-  "activation": ["onWebView:builtin.video-preview"],
+  "repository": "https://github.com/lvce-editor/video-preview",
+  "browser": "dist/videoPreviewMain.js",
+  "isolated": true,
+  "workerName": "Video Preview Extension Worker",
+  "activation": ["onView:builtin.video-preview"],
   "languages": [],
-  "rpc": [
-    {
-      "id": "builtin.video-preview.video-preview-worker",
-      "type": "web-worker",
-      "name": "Video Preview Worker",
-      "url": "../video-preview-worker/src/videoPreviewWorkerMain.ts",
-      "contentSecurityPolicy": ["default-src 'none'"]
-    }
-  ],
-  "webViews": [
+  "views": [
     {
       "id": "builtin.video-preview",
-      "rpc": "builtin.video-preview.video-preview-worker",
+      "title": "Video Preview",
+      "kind": "virtualDom",
+      "type": "preview",
+      "css": "media/index.css",
       "selector": [".mp4", ".mov", ".avi", ".wmv", ".avchd", ".webm", ".ogv", ".flv"],
-      "contentSecurityPolicy": ["default-src 'none'", "script-src 'self'", "style-src 'self'", "media-src 'self' blob:"],
-      "allow": ["fullscreen"],
-      "elements": [
-        {
-          "type": "title",
-          "value": "Video Preview"
-        },
-        {
-          "type": "script",
-          "path": "media/index.js"
-        },
-        {
-          "type": "css",
-          "path": "media/index.css"
-        }
-      ]
+      "showSideBarHeader": false
     }
   ]
 }

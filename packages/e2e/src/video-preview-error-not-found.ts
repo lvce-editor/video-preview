@@ -8,7 +8,7 @@ export const test = async ({ expect, FileSystem, Locator, Main }) => {
   await Main.openUri(`${tmpDir}/not-found.mp4`)
 
   // assert
-  const error = Locator('.Viewlet.Error')
+  const error = Locator('.Viewlet .VideoPreviewError')
   await expect(error).toBeVisible()
-  await expect(error).toHaveText('Error: File not found: /workspace/not-found.mp4')
+  await expect(error).toContainText('Failed to decode video')
 }

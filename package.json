@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "node packages/build/src/build.js",
-    "dev": "node ./packages/server/node_modules/@lvce-editor/server/bin/server.js --only-extension=packages/extension --test-path=packages/e2e",
+    "dev": "node ./packages/build/src/dev.js",
     "e2e": "cd packages/e2e && npm run e2e",
     "e2e:headless": "cd packages/e2e && npm run e2e:headless",
     "postinstall": "lerna bootstrap --ci",
