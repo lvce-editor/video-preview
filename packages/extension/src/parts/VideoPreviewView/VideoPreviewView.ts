@@ -8,7 +8,7 @@ export const view: View<VideoPreviewViewInstance> = {
   eventListeners: [
     {
       name: 'handleVideoError',
-      params: ['handleError', 'event.target.error.code', 'event.target.error.message'],
+      params: ['handleVideoError', 'event.target.error.code', 'event.target.error.message'],
     },
   ],
   id: viewId,

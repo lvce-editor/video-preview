@@ -31,7 +31,7 @@ test('saves the video uri', () => {
 test('renders a media error dispatched through a direct view handler', () => {
   const instance = createInstance(createContext())
 
-  instance.handleError(4, 'Format error')
+  instance.handleVideoError(4, 'Format error')
 
   expect(instance.render()[2]).toMatchObject({
     text: 'Failed to decode video: Format error',
