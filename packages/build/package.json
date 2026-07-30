@@ -11,7 +11,7 @@
   "devDependencies": {
     "@lvce-editor/package-extension": "^3.4.0",
     "@lvce-editor/server": "^0.93.25",
-    "esbuild": "^0.28.1",
-    "execa": "^9.6.1"
+    "@lvce-editor/shared-process": "^0.93.25",
+    "esbuild": "^0.28.1"
   }
 }
