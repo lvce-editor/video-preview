@@ -1,7 +1,7 @@
 import type { View } from '@lvce-editor/api'
 import { createInstance, type VideoPreviewViewInstance } from '../VideoPreviewViewInstance/VideoPreviewViewInstance.ts'
 
-export const viewId = 'builtin.video-preview'
+const viewId = 'builtin.video-preview'
 
 export const view: View<VideoPreviewViewInstance> = {
   create: createInstance,

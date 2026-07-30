@@ -1,0 +1,27 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "workspaces": {
+    ".": {
+      "project": ["*.js"]
+    },
+    "packages/build": {
+      "entry": [
+        "src/build-extension.js",
+        "src/build.js",
+        "src/build-static.js",
+        "src/computeNodeModulesCacheKey.js",
+        "src/dev.js"
+      ],
+      "project": ["src/**/*.js"],
+      "ignoreDependencies": ["@lvce-editor/server", "esbuild"]
+    },
+    "packages/e2e": {
+      "entry": ["src/**/*.ts"],
+      "project": ["src/**/*.ts"]
+    },
+    "packages/extension": {
+      "entry": ["src/videoPreviewMain.ts", "test/**/*.test.ts"],
+      "project": ["src/**/*.ts", "test/**/*.ts"]
+    }
+  }
+}
