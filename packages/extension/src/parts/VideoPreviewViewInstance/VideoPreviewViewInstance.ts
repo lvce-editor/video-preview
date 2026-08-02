@@ -33,11 +33,16 @@ const getUri = (context: VideoPreviewViewContext | undefined): string => {
   return typeof savedState?.uri === 'string' ? savedState.uri : ''
 }
 
-export const createInstance = (context?: ViewContext): VideoPreviewViewInstance => {
+type GetVideoUrl = (uri: string) => Promise<string>
+
+export const createInstanceWithGetVideoUrl = async (
+  context: ViewContext | undefined,
+  getUrl: GetVideoUrl,
+): Promise<VideoPreviewViewInstance> => {
   const uri = getUri(context)
   let state: VideoPreviewRenderState = {
     errorMessage: uri ? '' : 'Failed to load video',
-    url: uri ? getVideoUrl(uri) : '',
+    url: uri ? await getUrl(uri) : '',
   }
 
   return {
@@ -56,4 +61,8 @@ export const createInstance = (context?: ViewContext): VideoPreviewViewInstance 
       }
     },
   }
+}
+
+export const createInstance = (context?: ViewContext): Promise<VideoPreviewViewInstance> => {
+  return createInstanceWithGetVideoUrl(context, getVideoUrl)
 }
