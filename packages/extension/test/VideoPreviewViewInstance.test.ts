@@ -1,5 +1,7 @@
-import { expect, test } from '@jest/globals'
-import { createInstance } from '../src/parts/VideoPreviewViewInstance/VideoPreviewViewInstance.ts'
+import { expect, jest, test } from '@jest/globals'
+import { createInstanceWithGetVideoUrl } from '../src/parts/VideoPreviewViewInstance/VideoPreviewViewInstance.ts'
+
+const getVideoUrl = jest.fn<(uri: string) => Promise<string>>().mockResolvedValue('/remote/workspace/video.mp4')
 
 const createContext = (state?: unknown) => {
   return {
@@ -12,24 +14,25 @@ const createContext = (state?: unknown) => {
   }
 }
 
-test('creates a view instance from isolated view context', () => {
-  const instance = createInstance(createContext({ time: 12 }))
+test('creates a view instance from isolated view context', async () => {
+  const instance = await createInstanceWithGetVideoUrl(createContext({ time: 12 }), getVideoUrl)
 
   expect(instance.render()[2]).toMatchObject({
     src: '/remote/workspace/video.mp4',
   })
+  expect(getVideoUrl).toHaveBeenCalledWith('/workspace/video.mp4')
 })
 
-test('saves the video uri', () => {
-  const instance = createInstance(createContext())
+test('saves the video uri', async () => {
+  const instance = await createInstanceWithGetVideoUrl(createContext(), getVideoUrl)
 
   expect(instance.saveState()).toEqual({
     uri: '/workspace/video.mp4',
   })
 })
 
-test('renders a media error dispatched through a direct view handler', () => {
-  const instance = createInstance(createContext())
+test('renders a media error dispatched through a direct view handler', async () => {
+  const instance = await createInstanceWithGetVideoUrl(createContext(), getVideoUrl)
 
   instance.handleVideoError(4, 'Format error')
 
