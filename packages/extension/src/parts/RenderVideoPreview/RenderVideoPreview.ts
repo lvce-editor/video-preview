@@ -6,45 +6,44 @@ export interface VideoPreviewRenderState {
   readonly url: string
 }
 
-interface TreeNode {
-  readonly children: readonly TreeNode[]
-  readonly node: VirtualDomNode
+const parentNode: VirtualDomNode = {
+  childCount: 1,
+  className: 'VideoPreview',
+  type: VirtualDomElements.Div,
 }
 
-const node = (type: number, properties: Readonly<Record<string, unknown>>, children: readonly TreeNode[] = []): TreeNode => {
-  return {
-    children,
-    node: {
-      ...properties,
-      childCount: children.length,
-      type,
-    },
-  }
+const errorParentNode: VirtualDomNode = {
+  childCount: 1,
+  className: 'VideoPreviewError',
+  type: VirtualDomElements.Div,
 }
 
-const flatten = (tree: TreeNode): readonly VirtualDomNode[] => {
-  return [tree.node, ...tree.children.flatMap(flatten)]
+const videoParentNode: VirtualDomNode = {
+  childCount: 1,
+  className: 'VideoContent',
+  type: VirtualDomElements.Div,
 }
 
-const renderError = (message: string): TreeNode => {
-  return node(VirtualDomElements.Div, { className: 'VideoPreviewError' }, [{ children: [], node: text(message) }])
+const getErrorVirtualDom = (message: string): readonly VirtualDomNode[] => {
+  return [errorParentNode, text(message)]
 }
 
-const renderVideo = (state: Readonly<VideoPreviewRenderState>): TreeNode => {
-  const { url } = state
-  return node(VirtualDomElements.Div, { className: 'VideoContent' }, [
-    node(VirtualDomElements.Video, {
+const getVideoVirtualDom = (url: string): readonly VirtualDomNode[] => {
+  return [
+    videoParentNode,
+    {
+      childCount: 0,
       className: 'VideoElement',
       controls: true,
       onError: DomEventListenerFunctions.HandleError,
       src: url,
-    }),
-  ])
+      type: VirtualDomElements.Video,
+    },
+  ]
 }
 
 export const render = (state: Readonly<VideoPreviewRenderState>): readonly VirtualDomNode[] => {
-  const { errorMessage } = state
-  return flatten(
-    node(VirtualDomElements.Div, { className: 'VideoPreview' }, [errorMessage ? renderError(errorMessage) : renderVideo(state)]),
-  )
+  const { errorMessage, url } = state
+  const childDom = errorMessage ? getErrorVirtualDom(errorMessage) : getVideoVirtualDom(url)
+  return [parentNode, ...childDom]
 }
