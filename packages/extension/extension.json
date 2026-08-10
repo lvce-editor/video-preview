@@ -6,7 +6,7 @@
   "browser": "dist/videoPreviewMain.js",
   "contentSecurityPolicy": ["default-src 'none'", "script-src 'self'"],
   "isolated": true,
-  "workerName": "Video Preview Extension Worker",
+  "workerName": "Video Preview Worker",
   "activation": ["onView:builtin.video-preview"],
   "languages": [],
   "views": [
