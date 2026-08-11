@@ -14,6 +14,13 @@ const createContext = (state?: unknown) => {
   }
 }
 
+const createContextWithoutUri = (state?: unknown) => {
+  return {
+    ...createContext(state),
+    uri: undefined,
+  }
+}
+
 test('creates a view instance from isolated view context', async () => {
   const instance = await createInstanceWithGetVideoUrl(createContext({ time: 12 }), getVideoUrl)
 
@@ -38,5 +45,39 @@ test('renders a media error dispatched through a direct view handler', async () 
 
   expect(instance.render()[2]).toMatchObject({
     text: 'Failed to decode video: Format error',
+  })
+})
+
+test('restores the video uri from saved state', async () => {
+  const instance = await createInstanceWithGetVideoUrl(createContextWithoutUri({ uri: '/workspace/saved.mp4' }), getVideoUrl)
+
+  expect(getVideoUrl).toHaveBeenCalledWith('/workspace/saved.mp4')
+  expect(instance.saveState()).toEqual({
+    uri: '/workspace/saved.mp4',
+  })
+})
+
+test('renders a loading error when the context is missing', async () => {
+  const instance = await createInstanceWithGetVideoUrl(undefined, getVideoUrl)
+
+  expect(instance.render()[2]).toMatchObject({
+    text: 'Failed to load video',
+  })
+  expect(instance.saveState()).toEqual({
+    uri: '',
+  })
+})
+
+test.each([
+  ['a primitive', 'invalid'],
+  ['an object without a uri', { uri: 42 }],
+])('ignores %s saved state', async (_name, state) => {
+  const instance = await createInstanceWithGetVideoUrl(createContextWithoutUri(state), getVideoUrl)
+
+  expect(instance.render()[2]).toMatchObject({
+    text: 'Failed to load video',
+  })
+  expect(instance.saveState()).toEqual({
+    uri: '',
   })
 })
