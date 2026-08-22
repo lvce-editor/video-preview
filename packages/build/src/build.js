@@ -25,7 +25,7 @@ fs.cpSync(join(extension, 'media'), join(root, 'dist', 'media'), {
   recursive: true,
 })
 
-await bundleJs(join(extension, 'src', 'videoPreviewMain.ts'), join(root, 'dist', 'dist', 'videoPreviewMain.js'))
+await bundleJs(join(extension, 'src', 'videoPreviewMain.ts'), join(root, 'dist', 'dist', 'videoPreviewMain.js'), false)
 
 await packageExtension({
   highestCompression: true,
