@@ -15,6 +15,12 @@ test('returns a Blob URL for a custom file system URI', async () => {
   expect(readAsObjectUrl).not.toHaveBeenCalled()
 })
 
+test('returns an empty URL when a custom file system URI cannot be resolved', async () => {
+  executeCommand.mockRejectedValue(new Error('File not found'))
+
+  await expect(getVideoUrl('test:///missing.webm', readAsObjectUrl, executeCommand)).resolves.toBe('')
+})
+
 test('returns the remote URL for an Electron file URI', async () => {
   readAsObjectUrl.mockResolvedValue({
     error: '',

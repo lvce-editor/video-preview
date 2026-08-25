@@ -13,7 +13,11 @@ export const getVideoUrl = async (
   execute: ExecuteCommand = executeCommand,
 ): Promise<string> => {
   if (hasCustomFileSystemScheme(uri)) {
-    return (await execute('Blob.getSrc', uri)) as string
+    try {
+      return (await execute('Blob.getSrc', uri)) as string
+    } catch {
+      return ''
+    }
   }
   const result = await read(uri)
   return result.wasFound ? result.objectUrl : ''
