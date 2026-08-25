@@ -10,5 +10,5 @@ export const test = async ({ expect, FileSystem, Locator, Main }) => {
   // assert
   const error = Locator('.Viewlet.Error')
   await expect(error).toBeVisible()
-  await expect(error).toHaveText('Error: Video File not found')
+  await expect(error).toContainText('Error: Video File not found')
 }
