@@ -4,13 +4,13 @@ import { createInstanceWithGetVideoUrl } from '../src/parts/VideoPreviewViewInst
 
 const getVideoUrl = jest.fn<(uri: string) => Promise<string>>().mockResolvedValue('/remote/workspace/video.mp4')
 
-const createContext = (state?: unknown) => {
+const createContext = (state?: unknown, uri = '/workspace/video.mp4') => {
   return {
     requestRerender: async () => {},
     showContextMenu: async () => {},
     state,
     uid: 1,
-    uri: '/workspace/video.mp4',
+    uri,
     viewId: 'builtin.video-preview',
   }
 }
@@ -50,13 +50,7 @@ test('renders a media error dispatched through a direct view handler', async () 
 })
 
 test('falls back to audio playback for an audio-only WebM', async () => {
-  const instance = await createInstanceWithGetVideoUrl(
-    {
-      ...createContext(),
-      uri: '/workspace/recording.webm',
-    },
-    getVideoUrl,
-  )
+  const instance = await createInstanceWithGetVideoUrl(createContext(undefined, '/workspace/recording.webm'), getVideoUrl)
 
   instance.handleVideoError(4, 'Format error')
 
