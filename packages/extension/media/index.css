@@ -17,6 +17,7 @@
   height: 100%;
   align-items: center;
   justify-content: center;
+  user-select: text;
   color: var(--ErrorForeground, #f48771);
   font-size: 25px;
   font-family: sans-serif;
