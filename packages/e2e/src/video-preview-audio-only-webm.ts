@@ -9,9 +9,10 @@ export const test = async ({ expect, Locator, Main }) => {
   await Main.openUri(fileUri)
 
   // assert
-  const audio = Locator('.AudioElement')
+  const media = Locator('.AudioElement, .VideoElement')
   const error = Locator('.VideoPreviewError')
-  await expect(audio).toBeVisible()
-  await expect(audio).toHaveAttribute('src', `${remotePrefix}${audioUri}`)
+  await expect(media).toBeVisible()
+  await expect(media).toHaveAttribute('src', `${remotePrefix}${audioUri}`)
+  await expect(media).toHaveJSProperty('error', null)
   await expect(error).toHaveCount(0)
 }
