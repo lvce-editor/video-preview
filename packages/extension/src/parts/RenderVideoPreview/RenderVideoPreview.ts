@@ -57,12 +57,18 @@ const getAudioVirtualDom = (url: string): readonly VirtualDomNode[] => {
   ]
 }
 
-export const render = (state: Readonly<VideoPreviewRenderState>): readonly VirtualDomNode[] => {
+const getChildDom = (state: Readonly<VideoPreviewRenderState>): readonly VirtualDomNode[] => {
   const { errorMessage, mediaType, url } = state
-  const childDom = errorMessage
-    ? getErrorVirtualDom(errorMessage)
-    : mediaType === 'audio'
-      ? getAudioVirtualDom(url)
-      : getVideoVirtualDom(url)
+  if (errorMessage) {
+    return getErrorVirtualDom(errorMessage)
+  }
+  if (mediaType === 'audio') {
+    return getAudioVirtualDom(url)
+  }
+  return getVideoVirtualDom(url)
+}
+
+export const render = (state: Readonly<VideoPreviewRenderState>): readonly VirtualDomNode[] => {
+  const childDom = getChildDom(state)
   return [parentNode, ...childDom]
 }
