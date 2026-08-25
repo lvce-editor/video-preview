@@ -1,1 +1,2 @@
-export const HandleError = 'handleVideoError'
+export const HandleAudioError = 'handleAudioError'
+export const HandleVideoError = 'handleVideoError'

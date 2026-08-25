@@ -1,4 +1,5 @@
 import { expect, jest, test } from '@jest/globals'
+import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import { createInstanceWithGetVideoUrl } from '../src/parts/VideoPreviewViewInstance/VideoPreviewViewInstance.ts'
 
 const getVideoUrl = jest.fn<(uri: string) => Promise<string>>().mockResolvedValue('/remote/workspace/video.mp4')
@@ -42,6 +43,28 @@ test('renders a media error dispatched through a direct view handler', async () 
   const instance = await createInstanceWithGetVideoUrl(createContext(), getVideoUrl)
 
   instance.handleVideoError(4, 'Format error')
+
+  expect(instance.render()[2]).toMatchObject({
+    text: 'Failed to decode video: Format error',
+  })
+})
+
+test('falls back to audio playback for an audio-only WebM', async () => {
+  const instance = await createInstanceWithGetVideoUrl(
+    {
+      ...createContext(),
+      uri: '/workspace/recording.webm',
+    },
+    getVideoUrl,
+  )
+
+  instance.handleVideoError(4, 'Format error')
+
+  expect(instance.render()[2]).toMatchObject({
+    type: VirtualDomElements.Audio,
+  })
+
+  instance.handleAudioError(4, 'Format error')
 
   expect(instance.render()[2]).toMatchObject({
     text: 'Failed to decode video: Format error',

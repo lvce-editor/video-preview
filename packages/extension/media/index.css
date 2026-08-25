@@ -31,6 +31,7 @@
   align-items: center;
 }
 
+.AudioElement,
 .VideoElement {
   contain: content;
   position: relative;
