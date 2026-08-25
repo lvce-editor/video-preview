@@ -3,6 +3,7 @@ import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEven
 
 export interface VideoPreviewRenderState {
   readonly errorMessage: string
+  readonly mediaType: 'audio' | 'video'
   readonly url: string
 }
 
@@ -35,15 +36,39 @@ const getVideoVirtualDom = (url: string): readonly VirtualDomNode[] => {
       childCount: 0,
       className: 'VideoElement',
       controls: true,
-      onError: DomEventListenerFunctions.HandleError,
+      onError: DomEventListenerFunctions.HandleVideoError,
       src: url,
       type: VirtualDomElements.Video,
     },
   ]
 }
 
+const getAudioVirtualDom = (url: string): readonly VirtualDomNode[] => {
+  return [
+    videoParentNode,
+    {
+      childCount: 0,
+      className: 'AudioElement',
+      controls: true,
+      onError: DomEventListenerFunctions.HandleAudioError,
+      src: url,
+      type: VirtualDomElements.Audio,
+    },
+  ]
+}
+
+const getChildDom = (state: Readonly<VideoPreviewRenderState>): readonly VirtualDomNode[] => {
+  const { errorMessage, mediaType, url } = state
+  if (errorMessage) {
+    return getErrorVirtualDom(errorMessage)
+  }
+  if (mediaType === 'audio') {
+    return getAudioVirtualDom(url)
+  }
+  return getVideoVirtualDom(url)
+}
+
 export const render = (state: Readonly<VideoPreviewRenderState>): readonly VirtualDomNode[] => {
-  const { errorMessage, url } = state
-  const childDom = errorMessage ? getErrorVirtualDom(errorMessage) : getVideoVirtualDom(url)
+  const childDom = getChildDom(state)
   return [parentNode, ...childDom]
 }

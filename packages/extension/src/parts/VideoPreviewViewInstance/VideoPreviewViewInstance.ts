@@ -13,6 +13,7 @@ interface SavedState {
 }
 
 export interface VideoPreviewViewInstance extends VirtualDomViewInstance {
+  readonly handleAudioError: (code: unknown, message: unknown) => void
   readonly handleVideoError: (code: unknown, message: unknown) => void
   readonly render: () => readonly VirtualDomNode[]
   readonly saveState: () => unknown
@@ -40,16 +41,33 @@ export const createInstanceWithGetVideoUrl = async (
   getUrl: GetVideoUrl,
 ): Promise<VideoPreviewViewInstance> => {
   const uri = getUri(context)
+  let videoErrorMessage = ''
   let state: VideoPreviewRenderState = {
     errorMessage: uri ? '' : 'Failed to load video',
+    mediaType: 'video',
     url: uri ? await getUrl(uri) : '',
   }
 
   return {
-    handleVideoError(code: unknown, message: unknown): void {
+    handleAudioError(code: unknown, message: unknown): void {
       state = {
         ...state,
-        errorMessage: getVideoErrorMessage(code, message),
+        errorMessage: videoErrorMessage || getVideoErrorMessage(code, message),
+      }
+    },
+    handleVideoError(code: unknown, message: unknown): void {
+      const errorMessage = getVideoErrorMessage(code, message)
+      if (uri.toLowerCase().endsWith('.webm')) {
+        videoErrorMessage = errorMessage
+        state = {
+          ...state,
+          mediaType: 'audio',
+        }
+        return
+      }
+      state = {
+        ...state,
+        errorMessage,
       }
     },
     render(): readonly VirtualDomNode[] {
