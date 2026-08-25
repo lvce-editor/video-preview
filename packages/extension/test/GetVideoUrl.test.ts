@@ -3,6 +3,17 @@ import { expect, jest, test } from '@jest/globals'
 import { getVideoUrl } from '../src/parts/GetVideoUrl/GetVideoUrl.ts'
 
 const readAsObjectUrl = jest.fn<(uri: string) => Promise<ReadAsObjectUrlResult>>()
+const executeCommand = jest.fn<(id: string, ...args: readonly unknown[]) => Promise<unknown>>()
+
+test('returns a Blob URL for a custom file system URI', async () => {
+  executeCommand.mockResolvedValue('blob:http://localhost/recording-id')
+
+  await expect(getVideoUrl('gpt-voice-audio:///recording.webm', readAsObjectUrl, executeCommand)).resolves.toBe(
+    'blob:http://localhost/recording-id',
+  )
+  expect(executeCommand).toHaveBeenCalledWith('Blob.getSrc', 'gpt-voice-audio:///recording.webm')
+  expect(readAsObjectUrl).not.toHaveBeenCalled()
+})
 
 test('returns the remote URL for an Electron file URI', async () => {
   readAsObjectUrl.mockResolvedValue({
