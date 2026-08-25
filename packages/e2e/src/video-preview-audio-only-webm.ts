@@ -10,7 +10,8 @@ export const test = async ({ expect, Locator, Main }) => {
 
   // assert
   const audio = Locator('.AudioElement')
+  const error = Locator('.VideoPreviewError')
   await expect(audio).toBeVisible()
   await expect(audio).toHaveAttribute('src', `${remotePrefix}${audioUri}`)
-  await expect(Locator('.VideoPreviewError')).toHaveCount(0)
+  await expect(error).toHaveCount(0)
 }
