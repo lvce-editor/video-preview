@@ -12,4 +12,5 @@ export const test = async ({ expect, FileSystem, Locator, Main }) => {
   const error = Locator('.Viewlet .VideoPreviewError')
   await expect(error).toBeVisible()
   await expect(error).toContainText('Failed to decode video')
+  await expect(error).toHaveCSS('-webkit-user-select', 'text')
 }
