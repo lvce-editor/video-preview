@@ -2,6 +2,7 @@ import type { ViewContext, VirtualDomViewInstance } from '@lvce-editor/api'
 import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 import { getVideoErrorMessage } from '../GetVideoErrorMessage/GetVideoErrorMessage.ts'
 import { getVideoUrl } from '../GetVideoUrl/GetVideoUrl.ts'
+import { MediaFileNotFoundError } from '../MediaFileNotFoundError/MediaFileNotFoundError.ts'
 import { render, type VideoPreviewRenderState } from '../RenderVideoPreview/RenderVideoPreview.ts'
 
 interface VideoPreviewViewContext extends ViewContext {
@@ -36,17 +37,39 @@ const getUri = (context: VideoPreviewViewContext | undefined): string => {
 
 type GetVideoUrl = (uri: string) => Promise<string>
 
+const getInitialState = async (uri: string, getUrl: GetVideoUrl): Promise<VideoPreviewRenderState> => {
+  if (!uri) {
+    return {
+      errorMessage: 'Failed to load video',
+      mediaType: 'video',
+      url: '',
+    }
+  }
+  try {
+    return {
+      errorMessage: '',
+      mediaType: 'video',
+      url: await getUrl(uri),
+    }
+  } catch (error) {
+    if (!(error instanceof MediaFileNotFoundError)) {
+      throw error
+    }
+    return {
+      errorMessage: error.message,
+      mediaType: 'video',
+      url: '',
+    }
+  }
+}
+
 export const createInstanceWithGetVideoUrl = async (
   context: ViewContext | undefined,
   getUrl: GetVideoUrl,
 ): Promise<VideoPreviewViewInstance> => {
   const uri = getUri(context)
   let videoErrorMessage = ''
-  let state: VideoPreviewRenderState = {
-    errorMessage: uri ? '' : 'Failed to load video',
-    mediaType: 'video',
-    url: uri ? await getUrl(uri) : '',
-  }
+  let state = await getInitialState(uri, getUrl)
 
   return {
     handleAudioError(code: unknown, message: unknown): void {
