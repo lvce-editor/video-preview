@@ -1,14 +1,14 @@
-export const name = 'video-preview-error-not-found'
+export const name = 'video-preview-audio-error-not-found'
 
 export const test = async ({ expect, FileSystem, Locator, Main }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
 
   // act
-  await Main.openUri(`${tmpDir}/not-found.mp4`)
+  await Main.openUri(`${tmpDir}/not-found.webm`)
 
   // assert
   const error = Locator('.Viewlet .VideoPreviewError')
   await expect(error).toBeVisible()
-  await expect(error).toHaveText('Video file not found')
+  await expect(error).toHaveText('Audio file not found')
 }

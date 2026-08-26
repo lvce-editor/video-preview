@@ -32,7 +32,7 @@ test.each([
 
   await expect(getVideoUrl('test:///missing.webm', readAsObjectUrl, executeCommand, exists)).rejects.toMatchObject({
     code: 'E_NOT_FOUND',
-    message: 'Audio File not found',
+    message: 'Audio file not found',
   })
 })
 
@@ -81,7 +81,7 @@ test('throws a structured error when the video could not be resolved', async () 
     getVideoUrl('file:///home/simon/Downloads/missing.mp4', readAsObjectUrl, executeCommand, exists),
   ).rejects.toMatchObject({
     code: 'E_NOT_FOUND',
-    message: 'Video File not found',
+    message: 'Video file not found',
   })
 })
 
@@ -90,7 +90,7 @@ test('checks for a missing local file before creating its remote URL', async () 
 
   await expect(getVideoUrl('/workspace/missing.mp4', readAsObjectUrl, executeCommand, exists)).rejects.toMatchObject({
     code: 'E_NOT_FOUND',
-    message: 'Video File not found',
+    message: 'Video file not found',
   })
   expect(readAsObjectUrl).not.toHaveBeenCalled()
 })

@@ -1,5 +1,6 @@
 import { expect, jest, test } from '@jest/globals'
 import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import { MediaFileNotFoundError } from '../src/parts/MediaFileNotFoundError/MediaFileNotFoundError.ts'
 import { createInstanceWithGetVideoUrl } from '../src/parts/VideoPreviewViewInstance/VideoPreviewViewInstance.ts'
 
 const getVideoUrl = jest.fn<(uri: string) => Promise<string>>().mockResolvedValue('/remote/workspace/video.mp4')
@@ -83,6 +84,40 @@ test('renders a loading error when the context is missing', async () => {
   expect(instance.saveState()).toEqual({
     uri: '',
   })
+})
+
+test.each([
+  ['/workspace/missing.mp4', 'Video file not found'],
+  ['/workspace/missing.webm', 'Audio file not found'],
+])('renders a short message when %s is not found', async (uri, message) => {
+  const missingVideoUrl = jest.fn<(uri: string) => Promise<string>>().mockRejectedValue(new MediaFileNotFoundError(uri))
+
+  const instance = await createInstanceWithGetVideoUrl(createContext(undefined, uri), missingVideoUrl)
+
+  expect(instance.render()).toEqual([
+    {
+      childCount: 1,
+      className: 'VideoPreview',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 1,
+      className: 'VideoPreviewError',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 0,
+      text: message,
+      type: VirtualDomElements.Text,
+    },
+  ])
+})
+
+test('preserves unexpected video URL errors', async () => {
+  const error = new Error('Permission denied')
+  const failingVideoUrl = jest.fn<(uri: string) => Promise<string>>().mockRejectedValue(error)
+
+  await expect(createInstanceWithGetVideoUrl(createContext(), failingVideoUrl)).rejects.toBe(error)
 })
 
 test.each([
