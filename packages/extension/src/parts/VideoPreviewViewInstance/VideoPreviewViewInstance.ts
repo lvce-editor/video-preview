@@ -1,9 +1,10 @@
 import type { ViewContext, VirtualDomViewInstance } from '@lvce-editor/api'
 import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
+import type { VideoPreviewRenderState } from '../VideoPreviewRenderState/VideoPreviewRenderState.ts'
 import { getVideoErrorMessage } from '../GetVideoErrorMessage/GetVideoErrorMessage.ts'
 import { getVideoUrl } from '../GetVideoUrl/GetVideoUrl.ts'
 import { MediaFileNotFoundError } from '../MediaFileNotFoundError/MediaFileNotFoundError.ts'
-import { render, type VideoPreviewRenderState } from '../RenderVideoPreview/RenderVideoPreview.ts'
+import { render } from '../RenderVideoPreview/RenderVideoPreview.ts'
 
 interface VideoPreviewViewContext extends ViewContext {
   readonly uri?: string
