@@ -1,12 +1,10 @@
-const remotePrefix = '/remote'
-const videoUri = new URL('../fixtures/big_buck_bunny.mp4', import.meta.url).pathname.slice(remotePrefix.length)
-const fileUri = `file://${videoUri}`
+const videoUri = import.meta.resolve('../fixtures/big_buck_bunny.mp4')
 
 export const name = 'video-preview-element-structure'
 
 export const test = async ({ expect, Locator, Main }) => {
   // act
-  await Main.openUri(fileUri)
+  await Main.openUri(videoUri)
 
   // assert
   const element = Locator('.VideoContent > video.VideoElement')

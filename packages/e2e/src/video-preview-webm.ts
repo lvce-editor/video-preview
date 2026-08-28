@@ -1,15 +1,13 @@
-const remotePrefix = '/remote'
-const videoUri = new URL('../fixtures/big_buck_bunny.webm', import.meta.url).pathname.slice(remotePrefix.length)
-const fileUri = `file://${videoUri}`
+const videoUri = import.meta.resolve('../fixtures/big_buck_bunny.webm')
 
 export const name = 'video-preview-webm'
 
 export const test = async ({ expect, Locator, Main }) => {
   // act
-  await Main.openUri(fileUri)
+  await Main.openUri(videoUri)
 
   // assert
   const video = Locator('.VideoElement')
   await expect(video).toBeVisible()
-  await expect(video).toHaveAttribute('src', `${remotePrefix}${videoUri}`)
+  await expect(video).toHaveAttribute('src', videoUri)
 }
