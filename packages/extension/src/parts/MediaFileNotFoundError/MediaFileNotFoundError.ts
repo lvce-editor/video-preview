@@ -1,7 +1,8 @@
-const AudioFileExtension = '.webm'
+import { getMediaType } from '../GetMediaType/GetMediaType.ts'
 
 const getMessage = (uri: string): string => {
-  return uri.toLowerCase().endsWith(AudioFileExtension) ? 'Audio file not found' : 'Video file not found'
+  const isAudio = getMediaType(uri) === 'audio' || uri.toLowerCase().endsWith('.webm')
+  return isAudio ? 'Audio file not found' : 'Video file not found'
 }
 
 export class MediaFileNotFoundError extends Error {

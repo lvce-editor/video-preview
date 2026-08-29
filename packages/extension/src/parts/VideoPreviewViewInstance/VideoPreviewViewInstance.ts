@@ -1,6 +1,7 @@
 import type { ViewContext, VirtualDomViewInstance } from '@lvce-editor/api'
 import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 import type { VideoPreviewRenderState } from '../VideoPreviewRenderState/VideoPreviewRenderState.ts'
+import { getMediaType } from '../GetMediaType/GetMediaType.ts'
 import { getVideoErrorMessage } from '../GetVideoErrorMessage/GetVideoErrorMessage.ts'
 import { getVideoUrl } from '../GetVideoUrl/GetVideoUrl.ts'
 import { MediaFileNotFoundError } from '../MediaFileNotFoundError/MediaFileNotFoundError.ts'
@@ -39,17 +40,18 @@ const getUri = (context: VideoPreviewViewContext | undefined): string => {
 type GetVideoUrl = (uri: string) => Promise<string>
 
 const getInitialState = async (uri: string, getUrl: GetVideoUrl): Promise<VideoPreviewRenderState> => {
+  const mediaType = getMediaType(uri)
   if (!uri) {
     return {
       errorMessage: 'Failed to load video',
-      mediaType: 'video',
+      mediaType,
       url: '',
     }
   }
   try {
     return {
       errorMessage: '',
-      mediaType: 'video',
+      mediaType,
       url: await getUrl(uri),
     }
   } catch (error) {
@@ -58,7 +60,7 @@ const getInitialState = async (uri: string, getUrl: GetVideoUrl): Promise<VideoP
     }
     return {
       errorMessage: error.message,
-      mediaType: 'video',
+      mediaType,
       url: '',
     }
   }
