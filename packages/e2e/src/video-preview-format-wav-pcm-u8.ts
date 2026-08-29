@@ -1,4 +1,4 @@
-const mediaUri = import.meta.resolve('../fixtures/format-pcm.wav')
+const mediaUri = import.meta.resolve('../fixtures/format-pcm-u8.wav')
 
 const wait = (milliseconds: number): Promise<void> => {
   return new Promise((resolve) => globalThis.setTimeout(resolve, milliseconds))
@@ -18,7 +18,7 @@ const waitForMediaReady = async (expect, media): Promise<void> => {
   throw lastError
 }
 
-export const name = 'video-preview-format-wav'
+export const name = 'video-preview-format-wav-pcm-u8'
 
 export const test = async ({ expect, Locator, Main }) => {
   await Main.openUri(mediaUri)

@@ -66,7 +66,7 @@ test('falls back to audio playback for an audio-only WebM', async () => {
   })
 })
 
-test.each(['recording.flac', 'recording.mp3', 'recording.oga', 'recording.ogg', 'recording.opus', 'recording.wav'])(
+test.each(['recording.oga', 'recording.ogg', 'recording.opus', 'recording.wav'])(
   'renders %s with an audio element',
   async (fileName) => {
     const instance = await createInstanceWithGetVideoUrl(createContext(undefined, `/workspace/${fileName}`), getVideoUrl)
@@ -100,7 +100,7 @@ test('renders a loading error when the context is missing', async () => {
 test.each([
   ['/workspace/missing.mp4', 'Video file not found'],
   ['/workspace/missing.webm', 'Audio file not found'],
-  ['/workspace/missing.mp3', 'Audio file not found'],
+  ['/workspace/missing.ogg', 'Audio file not found'],
 ])('renders a short message when %s is not found', async (uri, message) => {
   const missingVideoUrl = jest.fn<(uri: string) => Promise<string>>().mockRejectedValue(new MediaFileNotFoundError(uri))
 

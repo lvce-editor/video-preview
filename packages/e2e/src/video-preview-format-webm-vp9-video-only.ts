@@ -1,4 +1,4 @@
-const mediaUri = import.meta.resolve('../fixtures/format-pcm.wav')
+const mediaUri = import.meta.resolve('../fixtures/format-vp9-video-only.webm')
 
 const wait = (milliseconds: number): Promise<void> => {
   return new Promise((resolve) => globalThis.setTimeout(resolve, milliseconds))
@@ -18,12 +18,12 @@ const waitForMediaReady = async (expect, media): Promise<void> => {
   throw lastError
 }
 
-export const name = 'video-preview-format-wav'
+export const name = 'video-preview-format-webm-vp9-video-only'
 
 export const test = async ({ expect, Locator, Main }) => {
   await Main.openUri(mediaUri)
 
-  const media = Locator('.AudioElement')
+  const media = Locator('.VideoElement')
   const error = Locator('.VideoPreviewError')
   await expect(media).toBeVisible()
   await expect(media).toHaveAttribute('src', mediaUri)

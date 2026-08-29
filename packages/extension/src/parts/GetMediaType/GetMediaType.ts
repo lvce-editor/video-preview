@@ -1,6 +1,6 @@
 import type { VideoPreviewRenderState } from '../VideoPreviewRenderState/VideoPreviewRenderState.ts'
 
-const audioFileExtensions = ['.flac', '.mp3', '.oga', '.ogg', '.opus', '.wav']
+const audioFileExtensions = ['.oga', '.ogg', '.opus', '.wav']
 
 export const getMediaType = (uri: string): VideoPreviewRenderState['mediaType'] => {
   const normalizedUri = uri.toLowerCase()
