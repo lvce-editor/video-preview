@@ -16,7 +16,7 @@
       "kind": "virtualDom",
       "type": "preview",
       "css": "media/index.css",
-      "selector": [".mp4", ".mov", ".avi", ".wmv", ".avchd", ".webm", ".ogv", ".flv"],
+      "selector": [".mp4", ".mov", ".avi", ".wmv", ".avchd", ".webm", ".ogv", ".flv", ".oga", ".ogg", ".opus", ".wav"],
       "showSideBarHeader": false
     }
   ]
