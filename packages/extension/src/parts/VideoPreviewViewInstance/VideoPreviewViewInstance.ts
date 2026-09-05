@@ -7,6 +7,10 @@ import { getVideoUrl } from '../GetVideoUrl/GetVideoUrl.ts'
 import { MediaFileNotFoundError } from '../MediaFileNotFoundError/MediaFileNotFoundError.ts'
 import { render } from '../RenderVideoPreview/RenderVideoPreview.ts'
 
+export interface VideoPreviewComponentState extends VideoPreviewRenderState {
+  readonly videoErrorMessage: string
+}
+
 interface VideoPreviewViewContext extends ViewContext {
   readonly uri?: string
 }
@@ -16,10 +20,12 @@ interface SavedState {
 }
 
 export interface VideoPreviewViewInstance extends VirtualDomViewInstance {
+  readonly getComponentState: () => VideoPreviewComponentState
   readonly handleAudioError: (code: unknown, message: unknown) => void
   readonly handleVideoError: (code: unknown, message: unknown) => void
   readonly render: () => readonly VirtualDomNode[]
   readonly saveState: () => unknown
+  readonly setComponentState: (state: VideoPreviewComponentState) => void
 }
 
 const getSavedState = (context: ViewContext | undefined): SavedState | undefined => {
@@ -71,11 +77,14 @@ export const createInstanceWithGetVideoUrl = async (
   getUrl: GetVideoUrl,
 ): Promise<VideoPreviewViewInstance> => {
   const uri = getUri(context)
-  let videoErrorMessage = ''
-  let state = await getInitialState(uri, getUrl)
+  let state: VideoPreviewComponentState = { ...(await getInitialState(uri, getUrl)), videoErrorMessage: '' }
 
   return {
+    getComponentState(): VideoPreviewComponentState {
+      return state
+    },
     handleAudioError(code: unknown, message: unknown): void {
+      const { videoErrorMessage } = state
       state = {
         ...state,
         errorMessage: videoErrorMessage || getVideoErrorMessage(code, message),
@@ -84,10 +93,10 @@ export const createInstanceWithGetVideoUrl = async (
     handleVideoError(code: unknown, message: unknown): void {
       const errorMessage = getVideoErrorMessage(code, message)
       if (uri.toLowerCase().endsWith('.webm')) {
-        videoErrorMessage = errorMessage
         state = {
           ...state,
           mediaType: 'audio',
+          videoErrorMessage: errorMessage,
         }
         return
       }
@@ -103,6 +112,9 @@ export const createInstanceWithGetVideoUrl = async (
       return {
         uri,
       }
+    },
+    setComponentState(newState: VideoPreviewComponentState): void {
+      state = newState
     },
   }
 }

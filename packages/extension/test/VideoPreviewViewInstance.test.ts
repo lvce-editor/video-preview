@@ -145,3 +145,13 @@ test.each([
     uri: '',
   })
 })
+
+test('component state stays live across edits and media events', async () => {
+  const first = await createInstanceWithGetVideoUrl(createContext(), getVideoUrl)
+  const second = await createInstanceWithGetVideoUrl(createContext(undefined, '/workspace/other.mp4'), getVideoUrl)
+  first.setComponentState({ ...first.getComponentState(), errorMessage: 'Inspector error' })
+  expect(JSON.stringify(first.render())).toContain('Inspector error')
+  expect(second.getComponentState().errorMessage).toBe('')
+  first.handleVideoError(3, '')
+  expect(first.getComponentState().errorMessage).toBe('Failed to load video')
+})
