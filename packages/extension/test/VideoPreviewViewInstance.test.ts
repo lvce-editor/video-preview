@@ -1,9 +1,13 @@
-import { expect, jest, test } from '@jest/globals'
+import { beforeEach, expect, jest, test } from '@jest/globals'
 import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import { MediaFileNotFoundError } from '../src/parts/MediaFileNotFoundError/MediaFileNotFoundError.ts'
 import { createInstanceWithGetVideoUrl } from '../src/parts/VideoPreviewViewInstance/VideoPreviewViewInstance.ts'
 
 const getVideoUrl = jest.fn<(uri: string) => Promise<string>>().mockResolvedValue('/remote/workspace/video.mp4')
+
+beforeEach(() => {
+  jest.clearAllMocks()
+})
 
 const createContext = (state?: unknown, uri = '/workspace/video.mp4') => {
   return {
@@ -133,7 +137,10 @@ test('preserves unexpected video URL errors', async () => {
 })
 
 test.each([
+  ['missing', undefined],
+  ['null', null],
   ['a primitive', 'invalid'],
+  ['an empty object', {}],
   ['an object without a uri', { uri: 42 }],
 ])('ignores %s saved state', async (_name, state) => {
   const instance = await createInstanceWithGetVideoUrl(createContextWithoutUri(state), getVideoUrl)
@@ -154,4 +161,43 @@ test('component state stays live across edits and media events', async () => {
   expect(second.getComponentState().errorMessage).toBe('')
   first.handleVideoError(3, '')
   expect(first.getComponentState().errorMessage).toBe('Failed to load video')
+})
+
+test('prefers the context uri over saved state', async () => {
+  const instance = await createInstanceWithGetVideoUrl(createContext({ uri: '/workspace/saved.ogg' }), getVideoUrl)
+
+  expect(getVideoUrl).toHaveBeenCalledTimes(1)
+  expect(getVideoUrl).toHaveBeenCalledWith('/workspace/video.mp4')
+  expect(instance.saveState()).toEqual({ uri: '/workspace/video.mp4' })
+  expect(instance.getComponentState().mediaType).toBe('video')
+})
+
+test('does not resolve an empty uri', async () => {
+  const instance = await createInstanceWithGetVideoUrl(createContext(undefined, ''), getVideoUrl)
+
+  expect(getVideoUrl).not.toHaveBeenCalled()
+  expect(instance.getComponentState()).toEqual({
+    errorMessage: 'Failed to load video',
+    mediaType: 'video',
+    url: '',
+    videoErrorMessage: '',
+  })
+})
+
+test('renders a direct audio error without a previous video error', async () => {
+  const instance = await createInstanceWithGetVideoUrl(createContext(undefined, '/workspace/recording.ogg'), getVideoUrl)
+
+  instance.handleAudioError(2, 'Network error')
+
+  expect(instance.render()[2]).toMatchObject({ text: 'Failed to load video: Network error' })
+})
+
+test('preserves the original video error when audio fallback fails', async () => {
+  const instance = await createInstanceWithGetVideoUrl(createContext(undefined, '/workspace/RECORDING.WEBM'), getVideoUrl)
+
+  instance.handleVideoError(4, 'Video format error')
+  expect(instance.getComponentState()).toMatchObject({ errorMessage: '', mediaType: 'audio' })
+  instance.handleAudioError(2, 'Audio network error')
+
+  expect(instance.render()[2]).toMatchObject({ text: 'Failed to decode video: Video format error' })
 })
