@@ -10,7 +10,8 @@ describe('getVideoErrorMessage', () => {
     expect(getVideoErrorMessage(2, 'Network error')).toBe('Failed to load video: Network error')
   })
 
-  test('omits invalid details', () => {
-    expect(getVideoErrorMessage(4, undefined)).toBe('Failed to decode video')
+  test.each([undefined, null, '', 42, {}])('omits empty or invalid details (%p)', (message) => {
+    expect(getVideoErrorMessage(4, message)).toBe('Failed to decode video')
+    expect(getVideoErrorMessage(2, message)).toBe('Failed to load video')
   })
 })

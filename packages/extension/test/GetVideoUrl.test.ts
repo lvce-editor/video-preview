@@ -36,12 +36,14 @@ test.each([
   })
 })
 
-test('preserves other custom file system errors', async () => {
-  const error = new Error('Permission denied')
-  executeCommand.mockRejectedValue(error)
+test.each([new Error('Permission denied'), null, undefined, 'Permission denied', { code: 'EACCES' }])(
+  'preserves other custom file system errors (%p)',
+  async (error) => {
+    executeCommand.mockRejectedValue(error)
 
-  await expect(getVideoUrl('test:///private.webm', readAsObjectUrl, executeCommand, exists)).rejects.toBe(error)
-})
+    await expect(getVideoUrl('test:///private.webm', readAsObjectUrl, executeCommand, exists)).rejects.toBe(error)
+  },
+)
 
 test('returns the remote URL for an Electron file URI', async () => {
   readAsObjectUrl.mockResolvedValue({
@@ -57,18 +59,22 @@ test('returns the remote URL for an Electron file URI', async () => {
   expect(readAsObjectUrl).toHaveBeenCalledWith('file:///home/simon/Downloads/video.mp4')
 })
 
-test('returns an HTTP URL without a file system existence check', async () => {
-  readAsObjectUrl.mockResolvedValue({
-    error: '',
-    objectUrl: 'https://example.com/video.mp4',
-    wasFound: true,
-  })
+// eslint-disable-next-line unicorn/prefer-https -- Exercise both supported HTTP schemes.
+test.each(['http://example.com/video.mp4', 'https://example.com/video.mp4'])(
+  'returns %s without a file system existence check',
+  async (uri) => {
+    readAsObjectUrl.mockResolvedValue({
+      error: '',
+      objectUrl: 'https://example.com/video.mp4',
+      wasFound: true,
+    })
 
-  await expect(getVideoUrl('https://example.com/video.mp4', readAsObjectUrl, executeCommand, exists)).resolves.toBe(
-    'https://example.com/video.mp4',
-  )
-  expect(exists).not.toHaveBeenCalled()
-})
+    await expect(getVideoUrl(uri, readAsObjectUrl, executeCommand, exists)).resolves.toBe('https://example.com/video.mp4')
+    expect(exists).not.toHaveBeenCalled()
+    expect(executeCommand).not.toHaveBeenCalled()
+    expect(readAsObjectUrl).toHaveBeenCalledWith(uri)
+  },
+)
 
 test('throws a structured error when the video could not be resolved', async () => {
   readAsObjectUrl.mockResolvedValue({
