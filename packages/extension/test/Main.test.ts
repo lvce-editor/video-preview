@@ -57,7 +57,7 @@ test('creates a registered view using the file system API', async () => {
     url: 'blob:video-preview',
     videoErrorMessage: '',
   }
-  view.setComponentState!(instance, state)
+  await view.setComponentState!(instance, state)
 
   expect(view.getComponentState!(instance)).toEqual(state)
   expect(instance.render()[2]).toMatchObject({ text: 'Inspector error' })

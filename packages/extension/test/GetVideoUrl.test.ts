@@ -59,6 +59,7 @@ test('returns the remote URL for an Electron file URI', async () => {
   expect(readAsObjectUrl).toHaveBeenCalledWith('file:///home/simon/Downloads/video.mp4')
 })
 
+// eslint-disable-next-line unicorn/prefer-https -- Exercise both supported HTTP schemes.
 test.each(['http://example.com/video.mp4', 'https://example.com/video.mp4'])(
   'returns %s without a file system existence check',
   async (uri) => {
