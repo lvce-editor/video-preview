@@ -16,8 +16,8 @@
       "ignoreDependencies": ["@lvce-editor/server", "esbuild"]
     },
     "packages/e2e": {
-      "entry": ["src/**/*.ts"],
-      "project": ["src/**/*.ts"]
+      "entry": ["e2e.config.js", "src/**/*.ts"],
+      "project": ["e2e.config.js", "src/**/*.ts"]
     },
     "packages/extension": {
       "entry": ["src/videoPreviewMain.ts", "test/**/*.test.ts"],

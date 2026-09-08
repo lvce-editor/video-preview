@@ -5,10 +5,10 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "e2e": "node ../build/src/build-extension.js && node ./node_modules/@lvce-editor/test-with-playwright/bin/test-with-playwright.js --only-extension=../extension --test-path=. --reuse-page --server-path=../../node_modules/@lvce-editor/server/bin/server.js",
-    "e2e:headless": "node ../build/src/build-extension.js && node ./node_modules/@lvce-editor/test-with-playwright/bin/test-with-playwright.js --only-extension=../extension --test-path=. --reuse-page --server-path=../../node_modules/@lvce-editor/server/bin/server.js --headless"
+    "e2e": "node ../build/src/build-extension.js && test-with-playwright",
+    "e2e:headless": "npm run e2e -- --headless"
   },
   "devDependencies": {
-    "@lvce-editor/test-with-playwright": "^22.6.0"
+    "@lvce-editor/test-with-playwright": "^22.34.0"
   }
 }
