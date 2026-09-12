@@ -2,6 +2,7 @@
   "id": "builtin.video-preview",
   "name": "Video Preview",
   "description": "Video Preview",
+  "icon": "media/video-preview.svg",
   "repository": "https://github.com/lvce-editor/video-preview",
   "browser": "dist/videoPreviewMain.js",
   "contentSecurityPolicy": ["default-src 'none'", "script-src 'self'"],
