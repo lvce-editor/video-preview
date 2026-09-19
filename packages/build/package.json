@@ -4,14 +4,18 @@
   "description": "",
   "type": "module",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "measure": "node --experimental-strip-types src/measureMemory.ts"
+  },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@lvce-editor/measure-memory": "^3.11.0",
     "@lvce-editor/package-extension": "^3.4.0",
     "@lvce-editor/server": "^0.115.21",
     "@lvce-editor/shared-process": "^0.115.21",
-    "esbuild": "^0.28.1"
+    "esbuild": "^0.28.1",
+    "playwright": "^1.63.0"
   }
 }
