@@ -12,6 +12,7 @@
     "e2e": "cd packages/e2e && npm run e2e --",
     "e2e:headless": "cd packages/e2e && npm run e2e:headless",
     "lint": "eslint . && prettier --check . && knip --no-config-hints",
+    "measure": "npm run measure --workspace=packages/build",
     "test": "npm test --workspaces --if-present",
     "test:watch": "node --unhandled-rejections=warn --experimental-vm-modules ./node_modules/jest/bin/jest.js --watch",
     "type-check": "tsc -b"
