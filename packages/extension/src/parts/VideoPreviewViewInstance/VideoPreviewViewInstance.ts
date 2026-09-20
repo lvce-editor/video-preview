@@ -22,6 +22,7 @@ interface SavedState {
 export interface VideoPreviewViewInstance extends VirtualDomViewInstance {
   readonly getComponentState: () => VideoPreviewComponentState
   readonly handleAudioError: (code: unknown, message: unknown) => void
+  readonly handleMediaReady: () => void
   readonly handleVideoError: (code: unknown, message: unknown) => void
   readonly render: () => readonly VirtualDomNode[]
   readonly saveState: () => unknown
@@ -51,6 +52,7 @@ const getInitialState = async (uri: string, getUrl: GetVideoUrl): Promise<VideoP
     return {
       errorMessage: 'Failed to load video',
       mediaType,
+      ready: false,
       url: '',
     }
   }
@@ -58,6 +60,7 @@ const getInitialState = async (uri: string, getUrl: GetVideoUrl): Promise<VideoP
     return {
       errorMessage: '',
       mediaType,
+      ready: false,
       url: await getUrl(uri),
     }
   } catch (error) {
@@ -67,6 +70,7 @@ const getInitialState = async (uri: string, getUrl: GetVideoUrl): Promise<VideoP
     return {
       errorMessage: error.message,
       mediaType,
+      ready: false,
       url: '',
     }
   }
@@ -88,6 +92,13 @@ export const createInstanceWithGetVideoUrl = async (
       state = {
         ...state,
         errorMessage: videoErrorMessage || getVideoErrorMessage(code, message),
+        ready: false,
+      }
+    },
+    handleMediaReady(): void {
+      state = {
+        ...state,
+        ready: true,
       }
     },
     handleVideoError(code: unknown, message: unknown): void {
@@ -96,6 +107,7 @@ export const createInstanceWithGetVideoUrl = async (
         state = {
           ...state,
           mediaType: 'audio',
+          ready: false,
           videoErrorMessage: errorMessage,
         }
         return
@@ -103,6 +115,7 @@ export const createInstanceWithGetVideoUrl = async (
       state = {
         ...state,
         errorMessage,
+        ready: false,
       }
     },
     render(): readonly VirtualDomNode[] {

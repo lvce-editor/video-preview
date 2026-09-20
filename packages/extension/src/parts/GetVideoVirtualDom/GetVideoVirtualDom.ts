@@ -15,6 +15,7 @@ export const getVideoVirtualDom = (url: string): readonly VirtualDomNode[] => {
       className: 'VideoElement',
       controls: true,
       onError: DomEventListenerFunctions.HandleVideoError,
+      onLoadedData: DomEventListenerFunctions.HandleMediaReady,
       src: url,
       type: VirtualDomElements.Video,
     },

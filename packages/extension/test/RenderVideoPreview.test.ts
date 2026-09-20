@@ -8,6 +8,7 @@ test('renders a playable video', () => {
     render({
       errorMessage: '',
       mediaType: 'video',
+      ready: false,
       url: '/remote/workspace/video.mp4',
     }),
   ).toEqual([
@@ -26,6 +27,7 @@ test('renders a playable video', () => {
       className: 'VideoElement',
       controls: true,
       onError: DomEventListenerFunctions.HandleVideoError,
+      onLoadedData: DomEventListenerFunctions.HandleMediaReady,
       src: '/remote/workspace/video.mp4',
       type: VirtualDomElements.Video,
     },
@@ -37,6 +39,7 @@ test('renders an error', () => {
     render({
       errorMessage: 'Failed to decode video',
       mediaType: 'video',
+      ready: false,
       url: '/remote/workspace/video.mp4',
     }),
   ).toEqual([
@@ -63,6 +66,7 @@ test('renders playable audio after a WebM video fallback', () => {
     render({
       errorMessage: '',
       mediaType: 'audio',
+      ready: false,
       url: '/remote/workspace/recording.webm',
     }),
   ).toEqual([
@@ -81,6 +85,7 @@ test('renders playable audio after a WebM video fallback', () => {
       className: 'AudioElement',
       controls: true,
       onError: DomEventListenerFunctions.HandleAudioError,
+      onLoadedData: DomEventListenerFunctions.HandleMediaReady,
       src: '/remote/workspace/recording.webm',
       type: VirtualDomElements.Audio,
     },
