@@ -12,6 +12,10 @@ export const view: InstanceView<VideoPreviewViewInstance, VideoPreviewComponentS
       params: ['handleAudioError', 'event.target.error.code', 'event.target.error.message'],
     },
     {
+      name: 'handleMediaReady',
+      params: ['handleMediaReady'],
+    },
+    {
       name: 'handleVideoError',
       params: ['handleVideoError', 'event.target.error.code', 'event.target.error.message'],
     },

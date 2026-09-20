@@ -33,6 +33,7 @@ test('creates a view instance from isolated view context', async () => {
   expect(instance.render()[2]).toMatchObject({
     src: '/remote/workspace/video.mp4',
   })
+  expect(instance.getComponentState().ready).toBe(false)
   expect(getVideoUrl).toHaveBeenCalledWith('/workspace/video.mp4')
 })
 
@@ -52,6 +53,23 @@ test('renders a media error dispatched through a direct view handler', async () 
   expect(instance.render()[2]).toMatchObject({
     text: 'Failed to decode video: Format error',
   })
+})
+
+test('stores media readiness after loadeddata', async () => {
+  const instance = await createInstanceWithGetVideoUrl(createContext(), getVideoUrl)
+
+  instance.handleMediaReady()
+
+  expect(instance.getComponentState().ready).toBe(true)
+})
+
+test('clears media readiness when media loading fails', async () => {
+  const instance = await createInstanceWithGetVideoUrl(createContext(), getVideoUrl)
+
+  instance.handleMediaReady()
+  instance.handleVideoError(3, 'Network error')
+
+  expect(instance.getComponentState().ready).toBe(false)
 })
 
 test('falls back to audio playback for an audio-only WebM', async () => {
@@ -179,6 +197,7 @@ test('does not resolve an empty uri', async () => {
   expect(instance.getComponentState()).toEqual({
     errorMessage: 'Failed to load video',
     mediaType: 'video',
+    ready: false,
     url: '',
     videoErrorMessage: '',
   })

@@ -15,6 +15,7 @@ export const getAudioVirtualDom = (url: string): readonly VirtualDomNode[] => {
       className: 'AudioElement',
       controls: true,
       onError: DomEventListenerFunctions.HandleAudioError,
+      onLoadedData: DomEventListenerFunctions.HandleMediaReady,
       src: url,
       type: VirtualDomElements.Audio,
     },

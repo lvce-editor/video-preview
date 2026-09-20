@@ -54,6 +54,7 @@ test('creates a registered view using the file system API', async () => {
   const state = {
     errorMessage: 'Inspector error',
     mediaType: 'video' as const,
+    ready: false,
     url: 'blob:video-preview',
     videoErrorMessage: '',
   }
