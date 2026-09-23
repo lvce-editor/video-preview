@@ -1,7 +1,8 @@
 import { getMediaType } from '../GetMediaType/GetMediaType.ts'
+import { defaultAudioFileExtensions } from '../VideoPreviewRenderState/VideoPreviewRenderState.ts'
 
 const getMessage = (uri: string): string => {
-  const isAudio = getMediaType(uri) === 'audio' || uri.toLowerCase().endsWith('.webm')
+  const isAudio = getMediaType(uri, defaultAudioFileExtensions) === 'audio' || uri.toLowerCase().endsWith('.webm')
   return isAudio ? 'Audio file not found' : 'Video file not found'
 }
 

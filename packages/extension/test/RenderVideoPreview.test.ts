@@ -6,6 +6,7 @@ import { render } from '../src/parts/RenderVideoPreview/RenderVideoPreview.ts'
 test('renders a playable video', () => {
   expect(
     render({
+      audioFileExtensions: ['.oga', '.ogg', '.opus', '.wav'],
       errorMessage: '',
       mediaType: 'video',
       ready: false,
@@ -37,6 +38,7 @@ test('renders a playable video', () => {
 test('renders an error', () => {
   expect(
     render({
+      audioFileExtensions: ['.oga', '.ogg', '.opus', '.wav'],
       errorMessage: 'Failed to decode video',
       mediaType: 'video',
       ready: false,
@@ -64,6 +66,7 @@ test('renders an error', () => {
 test('renders playable audio after a WebM video fallback', () => {
   expect(
     render({
+      audioFileExtensions: ['.oga', '.ogg', '.opus', '.wav'],
       errorMessage: '',
       mediaType: 'audio',
       ready: false,
