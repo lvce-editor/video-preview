@@ -79,6 +79,7 @@ test('falls back to audio playback for an audio-only WebM', async () => {
   instance.handleVideoError(4, 'Format error')
 
   expect(instance.render()[2]).toMatchObject({
+    childCount: 0,
     type: VirtualDomElements.Audio,
   })
 
@@ -95,6 +96,7 @@ test.each(['recording.oga', 'recording.ogg', 'recording.opus', 'recording.wav'])
     const instance = await createInstanceWithGetVideoUrl(createContext(undefined, `/workspace/${fileName}`), getVideoUrl)
 
     expect(instance.render()[2]).toMatchObject({
+      childCount: 0,
       type: VirtualDomElements.Audio,
     })
   },

@@ -1,10 +1,11 @@
 import { VirtualDomElements, type VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 import type { VideoPreviewRenderState } from '../VideoPreviewRenderState/VideoPreviewRenderState.ts'
+import * as ClassNames from '../ClassNames/ClassNames.ts'
 import { getChildDom } from '../GetChildDom/GetChildDom.ts'
 
 const parentNode: VirtualDomNode = {
   childCount: 1,
-  className: 'VideoPreview',
+  className: ClassNames.VideoPreview,
   type: VirtualDomElements.Div,
 }
 
