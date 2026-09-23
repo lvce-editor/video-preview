@@ -26,4 +26,10 @@ export default defineConfig([
       'unicorn/no-global-object-property-assignment': 'off',
     },
   },
+  {
+    files: ['packages/extension/extension.json'],
+    rules: {
+      'extension-json/non-empty-languages': 'off',
+    },
+  },
 ])
