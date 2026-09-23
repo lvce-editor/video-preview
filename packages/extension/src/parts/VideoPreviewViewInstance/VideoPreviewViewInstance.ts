@@ -1,11 +1,11 @@
 import type { ViewContext, VirtualDomViewInstance } from '@lvce-editor/api'
 import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
-import type { VideoPreviewRenderState } from '../VideoPreviewRenderState/VideoPreviewRenderState.ts'
 import { getMediaType } from '../GetMediaType/GetMediaType.ts'
 import { getVideoErrorMessage } from '../GetVideoErrorMessage/GetVideoErrorMessage.ts'
 import { getVideoUrl } from '../GetVideoUrl/GetVideoUrl.ts'
 import { MediaFileNotFoundError } from '../MediaFileNotFoundError/MediaFileNotFoundError.ts'
 import { render } from '../RenderVideoPreview/RenderVideoPreview.ts'
+import { defaultAudioFileExtensions, type VideoPreviewRenderState } from '../VideoPreviewRenderState/VideoPreviewRenderState.ts'
 
 export interface VideoPreviewComponentState extends VideoPreviewRenderState {
   readonly videoErrorMessage: string
@@ -47,9 +47,11 @@ const getUri = (context: VideoPreviewViewContext | undefined): string => {
 type GetVideoUrl = (uri: string) => Promise<string>
 
 const getInitialState = async (uri: string, getUrl: GetVideoUrl): Promise<VideoPreviewRenderState> => {
-  const mediaType = getMediaType(uri)
+  const audioFileExtensions = defaultAudioFileExtensions
+  const mediaType = getMediaType(uri, audioFileExtensions)
   if (!uri) {
     return {
+      audioFileExtensions,
       errorMessage: 'Failed to load video',
       mediaType,
       ready: false,
@@ -58,6 +60,7 @@ const getInitialState = async (uri: string, getUrl: GetVideoUrl): Promise<VideoP
   }
   try {
     return {
+      audioFileExtensions,
       errorMessage: '',
       mediaType,
       ready: false,
@@ -68,6 +71,7 @@ const getInitialState = async (uri: string, getUrl: GetVideoUrl): Promise<VideoP
       throw error
     }
     return {
+      audioFileExtensions,
       errorMessage: error.message,
       mediaType,
       ready: false,

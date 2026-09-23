@@ -52,6 +52,7 @@ test('creates a registered view using the file system API', async () => {
   expect(instance.render()[2]).toMatchObject({ src: 'blob:video-preview' })
 
   const state = {
+    audioFileExtensions: ['.oga', '.ogg', '.opus', '.wav'],
     errorMessage: 'Inspector error',
     mediaType: 'video' as const,
     ready: false,

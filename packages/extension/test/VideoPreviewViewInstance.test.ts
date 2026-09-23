@@ -61,6 +61,7 @@ test('stores media readiness after loadeddata', async () => {
   instance.handleMediaReady()
 
   expect(instance.getComponentState().ready).toBe(true)
+  expect(instance.getComponentState().audioFileExtensions).toEqual(['.oga', '.ogg', '.opus', '.wav'])
 })
 
 test('clears media readiness when media loading fails', async () => {
@@ -195,6 +196,7 @@ test('does not resolve an empty uri', async () => {
 
   expect(getVideoUrl).not.toHaveBeenCalled()
   expect(instance.getComponentState()).toEqual({
+    audioFileExtensions: ['.oga', '.ogg', '.opus', '.wav'],
     errorMessage: 'Failed to load video',
     mediaType: 'video',
     ready: false,
