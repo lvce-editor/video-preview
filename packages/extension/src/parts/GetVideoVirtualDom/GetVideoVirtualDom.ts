@@ -1,9 +1,10 @@
 import { VirtualDomElements, type VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
+import * as ClassNames from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 
 const videoParentNode: VirtualDomNode = {
   childCount: 1,
-  className: 'VideoContent',
+  className: ClassNames.VideoContent,
   type: VirtualDomElements.Div,
 }
 
@@ -12,7 +13,7 @@ export const getVideoVirtualDom = (url: string): readonly VirtualDomNode[] => {
     videoParentNode,
     {
       childCount: 0,
-      className: 'VideoElement',
+      className: ClassNames.VideoElement,
       controls: true,
       onError: DomEventListenerFunctions.HandleVideoError,
       onLoadedData: DomEventListenerFunctions.HandleMediaReady,
